@@ -55,7 +55,7 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             
-             this.$axios.post('http://www.zsw.test:31717/api/managerauth/expressage',this.Form).then((response)=>{
+             this.$axios.post('http://127.0.0.1:31717/api/managerauth/expressage',this.Form).then((response)=>{
                      console.log(response.data);
                      if(response.data.code==1)
                      {

@@ -29,7 +29,7 @@
         ruleForm: {
           Username: '',
           Password: '',
-          Houseid:new Number,
+          Houseid:null,
           Telephone: '',
         },
         rules: {
@@ -56,8 +56,8 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            
-             this.$axios.post('http://www.zsw.test:31717/api/ownerregister',this.ruleForm).then((response)=>{
+            this.ruleForm.Houseid = Number(this.ruleForm.Houseid)
+             this.$axios.post('http://127.0.0.1:31717/api/ownerregister',this.ruleForm).then((response)=>{
                      console.log(response.data);
                      if(response.data.code==1)
                      {

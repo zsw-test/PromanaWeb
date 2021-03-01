@@ -29,7 +29,7 @@ export default {
          submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.$axios.get('http://www.zsw.test:31717/api/ownerauth/carinfo/'+this.Form.carnumber).then((response)=>{
+            this.$axios.get('http://127.0.0.1:31717/api/ownerauth/carinfo/'+this.Form.carnumber).then((response)=>{
               if(response.data.code==1)
               {
                    this.$message("车辆类型:"+response.data.data.CarType)

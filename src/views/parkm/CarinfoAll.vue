@@ -65,13 +65,13 @@ export default {
                    this.getData()
           },
          getData(){
-                  this.$axios.get('http://www.zsw.test:31717/api/managerauth/carinfototal').then((response)=>{
+                  this.$axios.get('http://127.0.0.1:31717/api/managerauth/carinfototal').then((response)=>{
                         console.log(response.data.data.count);
                     this.total = response.data.data.count
                 }).catch((response)=>{
                     console.log(response);
                 })
-                this.$axios.get('http://www.zsw.test:31717/api/managerauth/carinfopage?pageindex='+this.pageindex+'&pagesize='+this.pagesize).then((response)=>{
+                this.$axios.get('http://127.0.0.1:31717/api/managerauth/carinfopage?pageindex='+this.pageindex+'&pagesize='+this.pagesize).then((response)=>{
                     this.tableData = response.data.data
                      console.log(response.data.data);
                 }).catch((response)=>{

@@ -4,7 +4,8 @@
   <el-table
     :data="tableData"
     border
-    style="width:100%">
+    style="width:100%"
+    table-layout:fixed>
     <el-table-column
       prop="ID"
       label="缴费单号"
@@ -62,13 +63,13 @@ export default {
             console.log(row)
         },
               page(currentpage){
-                     this.$axios.get('http://www.zsw.test:31717/api/managerauth/chargerecordtotal').then((response)=>{
+                     this.$axios.get('http://127.0.0.1:31717/api/managerauth/chargerecordtotal').then((response)=>{
                         console.log(response.data.data.count);
                     this.total = response.data.data.count
                 }).catch((response)=>{
                     console.log(response);
                 })
-                this.$axios.get('http://www.zsw.test:31717/api/managerauth/chargerecordpage?pageindex='+currentpage+'&pagesize='+this.pagesize).then((response)=>{
+                this.$axios.get('http://127.0.0.1:31717/api/managerauth/chargerecordpage?pageindex='+currentpage+'&pagesize='+this.pagesize).then((response)=>{
                     this.tableData = response.data.data
                      console.log(response.data.data);
                 }).catch((response)=>{
@@ -76,13 +77,13 @@ export default {
                 })
           },
          getData(){
-                  this.$axios.get('http://www.zsw.test:31717/api/managerauth/chargerecordtotal').then((response)=>{
+                  this.$axios.get('http://127.0.0.1:31717/api/managerauth/chargerecordtotal').then((response)=>{
                         console.log(response.data.data.count);
                     this.total = response.data.data.count
                 }).catch((response)=>{
                     console.log(response);
                 })
-                this.$axios.get('http://www.zsw.test:31717/api/managerauth/chargerecordpage?pageindex='+this.pageindex+'&pagesize='+this.pagesize).then((response)=>{
+                this.$axios.get('http://127.0.0.1:31717/api/managerauth/chargerecordpage?pageindex='+this.pageindex+'&pagesize='+this.pagesize).then((response)=>{
                     this.tableData = response.data.data
                      console.log(response.data.data);
                 }).catch((response)=>{

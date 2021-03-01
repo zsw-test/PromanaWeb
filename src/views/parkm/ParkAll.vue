@@ -8,33 +8,23 @@
     style="width:100%">
     <el-table-column
       prop="ID"
-      label="Id"
+      label="车位ID"
       width="120">
     </el-table-column>
     <el-table-column
-      prop="Username"
-      label="用户名"
+      prop="Ownerid"
+      label="业主ID"
       width="120">
     </el-table-column>
     <el-table-column
-      prop="Password"
-      label="密码"
+      prop="Status"
+      label="状态"
       width="120">
     </el-table-column>
     <el-table-column
-      prop="CreatedAt"
-      label="创建时间"
+      prop="Location"
+      label="位置"
       width="300">
-    </el-table-column>
-    <el-table-column
-      prop="Telephone"
-      label="电话"
-      width="120">
-    </el-table-column>
-     <el-table-column
-      prop="Houseid"
-      label="房间号"
-      width="120">
     </el-table-column>
     <el-table-column
       label="操作"
@@ -63,23 +53,20 @@
         :visible.sync="dialogVisible2"
         width="50%" >
 
-       <el-form :model="editForm" :rules="rules" ref="editForm" label-width="100px" class="demo-ruleForm">
-      <el-form-item label="用户名" prop="Username">
-    <el-input placeholder="请输入用户名" v-model="editForm.Username" style="%80"></el-input>
+  <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+    <el-form-item label="业主ID" prop="Ownerid">
+      <el-input placeholder="请输入业主ID" v-model="ruleForm.Ownerid" style="%80" type="number"></el-input>
+    </el-form-item>
+  <el-form-item label="状态" prop="Status">
+      <el-input placeholder="请输入状态" v-model="ruleForm.Status" type="number"></el-input>
+    </el-form-item>
+  <el-form-item label="位置" prop="Location">
+      <el-input placeholder="请输入位置" v-model="ruleForm.Location"></el-input>
   </el-form-item>
-    <el-form-item label="密码" prop="Password">
-    <el-input placeholder="请输入密码" v-model="editForm.Password" show-password></el-input>
-  </el-form-item>
-    <el-form-item label="房间号" prop="Houseid">
-    <el-input placeholder="请输入房产号" v-model="editForm.Houseid" type="number"></el-input>
-  </el-form-item>
-    <el-form-item label="联系电话" prop="Telephone">
-    <el-input placeholder="请输入联系电话" v-model="editForm.Telephone" type="number"></el-input>
-  </el-form-item>
-  <el-form-item>
-    <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
-    <el-button @click="resetForm('ruleForm')">重置</el-button>
-  </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="saveForm('ruleForm')">保存</el-button>
+         <el-button @click="dialogVisible2 = false">取 消</el-button>
+      </el-form-item>
     </el-form>
 
       </el-dialog>
@@ -106,7 +93,7 @@ export default {
      saveForm(formName){
        this.$refs[formName].validate((valid) => {
           if (valid) {
-             this.$axios.put('http://127.0.0.1:31717/api/managerauth/owner/'+this.editForm.ID,this.editForm).then((response)=>{
+             this.$axios.put('http://127.0.0.1:31717/api/managerauth/park/'+this.ruleForm.ID,this.ruleForm).then((response)=>{
                      console.log(response.data);
                       this.$message(response.data.result); 
                       //如果修改成功  消失对话框
@@ -127,10 +114,10 @@ export default {
         });
      },
      editRow(row){
-        this.editForm = row
+        this.ruleForm = row
      },
       removeRow() {
-         this.$axios.delete('http://127.0.0.1:31717/api/managerauth/owner/'+this.removeID).then((response)=>{
+         this.$axios.delete('http://127.0.0.1:31717/api/managerauth/park/'+this.removeID).then((response)=>{
                         console.log(response.data);
                          this.$message(response.data.result)
                          this.getData()
@@ -142,17 +129,14 @@ export default {
       setremoveRowID(row){
          this.removeID = row.ID
       },
-      handleClick(row) {
-        console.log(row);
-      },
       getData(){
-                  this.$axios.get('http://127.0.0.1:31717/api/managerauth/ownertotal').then((response)=>{
+                  this.$axios.get('http://127.0.0.1:31717/api/managerauth/parktotal').then((response)=>{
                         console.log(response.data.data.count);
                     this.total = response.data.data.count
                 }).catch((response)=>{
                     console.log(response);
                 })
-                this.$axios.get('http://127.0.0.1:31717/api/managerauth/ownerpage?pageindex='+this.pageindex+'&pagesize='+this.pagesize).then((response)=>{
+                this.$axios.get('http://127.0.0.1:31717/api/managerauth/parkpage?pageindex='+this.pageindex+'&pagesize='+this.pagesize).then((response)=>{
                     this.tableData = response.data.data
                      console.log(response.data.data);
                 }).catch((response)=>{
@@ -160,13 +144,13 @@ export default {
                 })
       },
       page(currentpage){
-                     this.$axios.get('http://127.0.0.1:31717/api/managerauth/ownertotal').then((response)=>{
+                     this.$axios.get('http://127.0.0.1:31717/api/managerauth/parktotal').then((response)=>{
                         console.log(response.data.data.count);
                     this.total = response.data.data.count
                 }).catch((response)=>{
                     console.log(response);
                 })
-                this.$axios.get('http://127.0.0.1:31717/api/managerauth/ownerpage?pageindex='+currentpage+'&pagesize='+this.pagesize).then((response)=>{
+                this.$axios.get('http://127.0.0.1:31717/api/managerauth/parkpage?pageindex='+currentpage+'&pagesize='+this.pagesize).then((response)=>{
                     this.tableData = response.data.data
                      console.log(response);
                 }).catch((response)=>{
@@ -181,27 +165,20 @@ export default {
     data() {
       return {
         dialogVisible2:false,
-        editForm:{
-        Username: '',
-          Password: '',
-          Houseid:new Number,
-          Telephone: '',
+        ruleForm: {
+          Ownerid: null,
+          Status: null,
+          Location: '',
         },
         rules: {
-          Username: [
-            { required: true, message: '请输入用户名', trigger: 'blur' },
-            { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
+          Ownerid: [
+            { required: false, message: '请输入用户名', trigger: 'blur' },
           ],
-          Password: [
-            { required: true, message: '请输入密码', trigger: 'change' },
-            { min: 6, max: 10, message: '长度在 6 到 10 个字符', trigger: 'blur' }
+          Status: [
+            { required: false, message: '请输入密码', trigger: 'change' },
           ],
-          Depart: [
-            {required: true, message: '请输入部门', trigger: 'change' }
-          ],
-          Telephone: [
-            {required: true, message: '请输入电话', trigger: 'change' },
-              { min: 11, max: 11, message: '长度为 11个字符', trigger: 'blur' }
+          Location: [
+            {required: true, message: '请输入位置', trigger: 'change' },
           ]
         },
         

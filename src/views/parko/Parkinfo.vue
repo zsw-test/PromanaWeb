@@ -6,9 +6,30 @@
   </el-form-item>
   <el-form-item>
     <el-button type="primary" @click="ParkInfoIn('Form')">入库</el-button>
-    <el-button type="primary" @click="ParkInfoOut('Form')">出库</el-button>
+     <el-button type="primary" @click="ParkInfoOut('Form'),dialogVisible = true">结算费用缴纳</el-button>
+    <el-button type="primary" @click="ParkInfoDelete('Form')">出库</el-button>
   </el-form-item>
 </el-form>
+
+
+
+<!-- 显示停车信息的页面 -->
+<el-dialog
+  title="提示"
+  :visible.sync="dialogVisible"
+  width="30%">
+ <el-card>停车时长：{{ParkinfoData.Hour}}小时</el-card><br>
+ <el-card>费用：{{ParkinfoData.Fee}}元</el-card><br>
+  <el-card>微信支付：
+    <el-image  :src="require('@/assets/404_images/404.png')"></el-image>
+    </el-card><br>
+  
+  <span slot="footer" class="dialog-footer">
+    <el-button type="primary" @click="dialogVisible = false">缴费完成</el-button>
+  </span>
+</el-dialog>
+
+
   </div>
 </template>
 
@@ -16,6 +37,8 @@
 export default {
     data() {
       return {
+        ParkinfoData:{},
+        dialogVisible:false,
         Form: {
           carnumber: '',
         },
@@ -27,10 +50,32 @@ export default {
       }
     },
     methods: {
+       ParkInfoDelete(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.$axios.delete('http://127.0.0.1:31717/api/ownerauth/parkinfo/'+this.Form.carnumber).then((response)=>{
+              if(response.data.code==1)
+              {
+                    this.$message(response.data.result)
+              }else{
+                   this.$message(response.data.result)
+              }
+              console.log(response.data);
+                }).catch((response)=>{
+                    console.log(response.data);
+                })
+
+          } else {
+              this.$message('提交错误!');
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
          ParkInfoIn(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.$axios.post('http://www.zsw.test:31717/api/ownerauth/parkinfo/'+this.Form.carnumber).then((response)=>{
+            this.$axios.post('http://127.0.0.1:31717/api/ownerauth/parkinfo/'+this.Form.carnumber).then((response)=>{
               if(response.data.code==1)
               {
                     this.$message(response.data.result)
@@ -52,16 +97,17 @@ export default {
          ParkInfoOut(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.$axios.get('http://www.zsw.test:31717/api/ownerauth/parkinfo/'+this.Form.carnumber).then((response)=>{
+            this.$axios.get('http://127.0.0.1:31717/api/ownerauth/parkinfo/'+this.Form.carnumber).then((response)=>{
               if(response.data.code==1)
               {
-                     this.$message(response.data.result)
+                  this.ParkinfoData = response.data.data
+                     this.$message(String(response.data.data.Fee))
               }else{
                    this.$message(response.data.result)
               }
               console.log(response.data);
                 }).catch((response)=>{
-                    console.log(response.data);
+                    console.log(response);
                 })
           } else {
               this.$message('提交错误!');

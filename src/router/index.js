@@ -154,7 +154,13 @@ export const constantRoutes = [
         name: 'Parkinfo',
         component: () => import('@/views/parko/Parkinfo'),
         meta: { title: 'Parkinfo', icon: 'tree' }
-      }
+      },
+      {
+        path: 'ParkBuy',
+        name: 'ParkBuy',
+        component: () => import('@/views/parko/ParkBuy'),
+        meta: { title: 'ParkBuy', icon: 'tree' }
+      },
     ]
   },
   {
@@ -175,6 +181,18 @@ export const constantRoutes = [
         name: 'ParkinfoAll',
         component: () => import('@/views/parkm/ParkinfoAll'),
         meta: { title: 'ParkinfoAll', icon: 'tree' }
+      },
+      {
+        path: 'ParkAll',
+        name: 'ParkAll',
+        component: () => import('@/views/parkm/ParkAll'),
+        meta: { title: 'ParkAll', icon: 'tree' }
+      },
+      {
+        path: 'ParkAdd',
+        name: 'ParkAdd',
+        component: () => import('@/views/parkm/ParkAdd'),
+        meta: { title: 'ParkAdd', icon: 'tree' }
       },
     ]
   },

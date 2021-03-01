@@ -82,13 +82,13 @@ export default {
             console.log(row)
         },
               page(currentpage){
-                     this.$axios.get('http://www.zsw.test:31717/api/managerauth/repairtotal').then((response)=>{
+                     this.$axios.get('http://127.0.0.1:31717/api/managerauth/repairtotal').then((response)=>{
                         console.log(response.data.data.count);
                     this.total = response.data.data.count
                 }).catch((response)=>{
                     console.log(response);
                 })
-                this.$axios.get('http://www.zsw.test:31717/api/managerauth/repairpage?pageindex='+currentpage+'&pagesize='+this.pagesize).then((response)=>{
+                this.$axios.get('http://127.0.0.1:31717/api/managerauth/repairpage?pageindex='+currentpage+'&pagesize='+this.pagesize).then((response)=>{
                     this.tableData = response.data.data
                      console.log(response.data.data);
                 }).catch((response)=>{
@@ -96,13 +96,13 @@ export default {
                 })
           },
          getData(){
-                  this.$axios.get('http://www.zsw.test:31717/api/managerauth/repairtotal').then((response)=>{
+                  this.$axios.get('http://127.0.0.1:31717/api/managerauth/repairtotal').then((response)=>{
                         console.log(response.data.data.count);
                     this.total = response.data.data.count
                 }).catch((response)=>{
                     console.log(response);
                 })
-                this.$axios.get('http://www.zsw.test:31717/api/managerauth/repairpage?pageindex='+this.pageindex+'&pagesize='+this.pagesize).then((response)=>{
+                this.$axios.get('http://127.0.0.1:31717/api/managerauth/repairpage?pageindex='+this.pageindex+'&pagesize='+this.pagesize).then((response)=>{
                     this.tableData = response.data.data
                      console.log(response.data.data);
                 }).catch((response)=>{
