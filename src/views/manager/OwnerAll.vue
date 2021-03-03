@@ -1,11 +1,13 @@
 
 <template>
-  <div>
+  <div class="app-container">
 
   <el-table
     :data="tableData"
-    border
-    style="width:100%">
+      element-loading-text="Loading"
+      border
+      fit
+      highlight-current-row>
     <el-table-column
       prop="ID"
       label="Id"
@@ -36,10 +38,17 @@
       label="房间号"
       width="120">
     </el-table-column>
+        <el-table-column
+      prop="ParkId"
+      label="车位号"
+      width="120">
+    </el-table-column>
+    
     <el-table-column
       label="操作"
-      width="200">
+      width="300">
       <template slot-scope="scope">
+         <el-button @click="untiePark(scope.row)" type="primary" size="small">解绑车位</el-button>
         <el-button @click="editRow(scope.row),dialogVisible2 = true" type="primary" size="medium">编辑</el-button>
         <el-button @click="setremoveRowID(scope.row),dialogVisible = true" type="danger" size="medium">删除</el-button>
       </template>
@@ -103,6 +112,19 @@
 /* eslint-disable */ 
 export default {
    methods: {
+     untiePark(row){
+       if(row.ParkId==0){
+         this.$message("该用户没有车位！")
+         return 
+       }
+         this.$axios.delete('http://127.0.0.1:31717/api/managerauth/owneruntiepark/'+row.ID).then((response)=>{
+                        console.log(response.data);
+                         this.$message(response.data.result)
+                         this.getData()
+                }).catch((response)=>{
+                    console.log(response);
+                })
+     },
      saveForm(formName){
        this.$refs[formName].validate((valid) => {
           if (valid) {

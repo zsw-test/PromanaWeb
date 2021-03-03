@@ -131,6 +131,27 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/HouseM',
+    component: Layout,
+    redirect: '/HouseM/HouseAll',
+    name: 'HouseM',
+    meta: { title: 'HouseM', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'HouseAll',
+        name: 'HouseAll',
+        component: () => import('@/views/housem/HouseAll'),
+        meta: { title: 'HouseAll', icon: 'table' }
+      },
+      {
+        path: 'ResidentAll',
+        name: 'ResidentAll',
+        component: () => import('@/views/housem/ResidentAll'),
+        meta: { title: 'ResidentAll', icon: 'table' }
+      },
+    ]
+  },
+  {
     path: '/ParkO',
     component: Layout,
     redirect: '/ParkO/CarinfoGet',

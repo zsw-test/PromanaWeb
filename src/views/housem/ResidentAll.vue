@@ -10,27 +10,37 @@
       highlight-current-row>
     <el-table-column
       prop="ID"
-      label="Id"
+      label="住户ID"
       width="120">
     </el-table-column>
     <el-table-column
-      prop="Username"
-      label="用户名"
+      prop="Name"
+      label="姓名"
       width="120">
     </el-table-column>
     <el-table-column
-      prop="Password"
-      label="密码"
+      prop="Age"
+      label="年龄"
       width="120">
     </el-table-column>
     <el-table-column
-      prop="CreatedAt"
-      label="创建时间"
-      width="300">
+      prop="Sex"
+      label="性别"
+      width="120">
     </el-table-column>
-    <el-table-column
-      prop="Depart"
-      label="部门"
+        <el-table-column
+      prop="Work"
+      label="工作"
+      width="120">
+    </el-table-column>
+  <el-table-column
+      prop="IdCard"
+      label="身份证号"
+      width="120">
+    </el-table-column>
+  <el-table-column
+      prop="HouseId"
+      label="房屋ID"
       width="120">
     </el-table-column>
     <el-table-column
@@ -60,21 +70,27 @@
         :visible.sync="dialogVisible2"
         width="50%" >
 
-       <el-form :model="editForm" :rules="rules" ref="editForm" label-width="100px" class="demo-ruleForm">
-      <el-form-item label="用户名" prop="Username">
-        <el-input placeholder="请输入用户名" v-model="editForm.Username"></el-input>
-      </el-form-item>
-        <el-form-item label="密码" prop="Password">
-        <el-input placeholder="请输入密码" v-model="editForm.Password" show-password></el-input>
-      </el-form-item>
-        <el-form-item label="部门" prop="Depart">
-        <el-input placeholder="请输入部门" v-model="editForm.Depart"></el-input>
-      </el-form-item>
-        <el-form-item label="联系电话" prop="Telephone">
-        <el-input placeholder="请输入联系电话" v-model="editForm.Telephone" type="number"></el-input>
-      </el-form-item>
+  <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+    <el-form-item label="姓名" prop="Name">
+      <el-input placeholder="请输入姓名" v-model="ruleForm.Name" style="%80"></el-input>
+    </el-form-item>
+  <el-form-item label="年龄" prop="Age">
+      <el-input placeholder="请输入年龄" v-model="ruleForm.Age" type="number"></el-input>
+    </el-form-item>
+  <el-form-item label="性别" prop="Sex">
+      <el-input placeholder="请输入性别" v-model="ruleForm.Sex"></el-input>
+  </el-form-item>
+      <el-form-item label="工作" prop="Work">
+      <el-input placeholder="请输入工作" v-model="ruleForm.Work" style="%80"></el-input>
+    </el-form-item>
+  <el-form-item label="身份证" prop="IdCard">
+      <el-input placeholder="请输入身份证" v-model="ruleForm.IdCard" type="number"></el-input>
+    </el-form-item>
+  <el-form-item label="房屋ID" prop="HouseId">
+      <el-input placeholder="请输入房屋ID" v-model="ruleForm.HouseId"  type="number"></el-input>
+  </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="saveForm('editForm')">保存</el-button>
+        <el-button type="primary" @click="saveForm('ruleForm')">保存</el-button>
          <el-button @click="dialogVisible2 = false">取 消</el-button>
       </el-form-item>
     </el-form>
@@ -98,15 +114,15 @@
 
 <script>
 /* eslint-disable */ 
- import service from "@/utils/request"
 export default {
- 
    methods: {
      saveForm(formName){
        this.$refs[formName].validate((valid) => {
           if (valid) {
-            
-             this.$axios.put('http://127.0.0.1:31717/api/manager/'+this.editForm.ID,this.editForm).then((response)=>{
+             this.ruleForm.Age=Number(this.ruleForm.Age)
+            this.ruleForm.IdCard=Number(this.ruleForm.IdCard)
+            this.ruleForm.HouseId=Number(this.ruleForm.HouseId)
+             this.$axios.put('http://127.0.0.1:31717/api/managerauth/resident/'+this.ruleForm.ID,this.ruleForm).then((response)=>{
                      console.log(response.data);
                       this.$message(response.data.result); 
                       //如果修改成功  消失对话框
@@ -127,10 +143,10 @@ export default {
         });
      },
      editRow(row){
-        this.editForm = row
+        this.ruleForm = row
      },
       removeRow() {
-         this.$axios.delete('http://127.0.0.1:31717/api/manager/'+this.removeID).then((response)=>{
+         this.$axios.delete('http://127.0.0.1:31717/api/managerauth/resident/'+this.removeID).then((response)=>{
                         console.log(response.data);
                          this.$message(response.data.result)
                          this.getData()
@@ -143,14 +159,13 @@ export default {
          this.removeID = row.ID
       },
       getData(){
-
-                  service.get('http://127.0.0.1:31717/api/managerauth/managertotal').then((response)=>{
+                  this.$axios.get('http://127.0.0.1:31717/api/managerauth/residenttotal').then((response)=>{
                         console.log(response.data.data.count);
                     this.total = response.data.data.count
                 }).catch((response)=>{
                     console.log(response);
                 })
-                service.get('http://127.0.0.1:31717/api/managerauth/managerpage?pageindex='+this.pageindex+'&pagesize='+this.pagesize).then((response)=>{
+                this.$axios.get('http://127.0.0.1:31717/api/managerauth/residentpage?pageindex='+this.pageindex+'&pagesize='+this.pagesize).then((response)=>{
                     this.tableData = response.data.data
                      console.log(response.data.data);
                 }).catch((response)=>{
@@ -158,7 +173,18 @@ export default {
                 })
       },
       page(currentpage){
-                  this.getData()
+                     this.$axios.get('http://127.0.0.1:31717/api/managerauth/residenttotal').then((response)=>{
+                        console.log(response.data.data.count);
+                    this.total = response.data.data.count
+                }).catch((response)=>{
+                    console.log(response);
+                })
+                this.$axios.get('http://127.0.0.1:31717/api/managerauth/residentpage?pageindex='+currentpage+'&pagesize='+this.pagesize).then((response)=>{
+                    this.tableData = response.data.data
+                     console.log(response);
+                }).catch((response)=>{
+                    console.log(response);
+                })
       },
     },
     created(){
@@ -168,27 +194,33 @@ export default {
     data() {
       return {
         dialogVisible2:false,
-        editForm:{
-          Username: '',
-          Password: '',
-          Depart: '',
-          Telephone: '',
+        ruleForm: {
+          ID:null,
+          Name: null,
+          Age: null,
+          Sex: null,
+          Work:null,
+          IdCard:null,
+          HouseId:null,
         },
         rules: {
-          Username: [
-            { required: true, message: '请输入用户名', trigger: 'blur' },
-            { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
+          Name: [
+            { required: true, message: '请输入姓名', trigger: 'blur' },
           ],
-          Password: [
-            { required: true, message: '请输入密码', trigger: 'change' },
-            { min: 6, max: 10, message: '长度在 6 到 10 个字符', trigger: 'blur' }
+          Age: [
+            { required: true, message: '请输入年龄', trigger: 'change' },
           ],
-          Depart: [
-            {required: true, message: '请输入部门', trigger: 'change' }
+          Sex: [
+            {required: true, message: '请输入性别', trigger: 'change' },
           ],
-          Telephone: [
-            {required: true, message: '请输入电话', trigger: 'change' },
-              { min: 11, max: 11, message: '长度为 11个字符', trigger: 'blur' }
+          Work: [
+            { required: false, message: '请输入工作', trigger: 'blur' },
+          ],
+          IdCard: [
+            { required: true, message: '请输入身份证', trigger: 'change' },
+          ],
+          HouseId: [
+            {required: true, message: '请输入房屋ID', trigger: 'change' },
           ]
         },
         

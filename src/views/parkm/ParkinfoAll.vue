@@ -1,10 +1,12 @@
 <template>
-  <div>
- 
+  <div class="app-container">
+
   <el-table
     :data="tableData"
-    border
-    style="width:100%">
+      element-loading-text="Loading"
+      border
+      fit
+      highlight-current-row>
     <el-table-column
       prop="ID"
       label="停车账单号"
@@ -26,7 +28,7 @@
       width="120">
     </el-table-column>
     <el-table-column
-      prop="Hour"
+      prop="Parktime"
       label="时长"
       width="120">
     </el-table-column>

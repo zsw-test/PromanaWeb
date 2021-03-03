@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <div class="app-container">
+
+ 
 <el-form :model="Form" :rules="rules" ref="Form" label-width="100px" class="demo-Form">
   <el-form-item label="车牌号" prop="carnumber">
     <el-input placeholder="车牌号" v-model="Form.carnumber" style="%80"></el-input>
@@ -18,7 +20,7 @@
   title="提示"
   :visible.sync="dialogVisible"
   width="30%">
- <el-card>停车时长：{{ParkinfoData.Hour}}小时</el-card><br>
+ <el-card>停车时长：{{ParkinfoData.Parktime}}</el-card><br>
  <el-card>费用：{{ParkinfoData.Fee}}元</el-card><br>
   <el-card>微信支付：
     <el-image  :src="require('@/assets/404_images/404.png')"></el-image>

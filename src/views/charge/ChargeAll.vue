@@ -1,12 +1,12 @@
 <template>
-  <div>
- 
-  <el-table  
+  <div class="app-container">
+
+  <el-table
     :data="tableData"
-    border
-    style="width:100%"
-    table-layout:fixed
-    >
+      element-loading-text="Loading"
+      border
+      fit
+      highlight-current-row>
     <el-table-column
       prop="ID"
       label="Id"

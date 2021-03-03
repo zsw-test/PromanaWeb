@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="app-container">
+
 
 <el-form :model="form" :rules="rules" ref="form" label-width="100px" class="demo-Form">
   <el-form-item label="业主Id"  prop="Ownerid">

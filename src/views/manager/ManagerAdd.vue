@@ -1,5 +1,5 @@
 <template>
- <div>
+  <div class="app-container">
 
 <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
   <el-form-item label="用户名" prop="Username">

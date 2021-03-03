@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <div class="app-container">
+
+
 <el-form :model="Form" :rules="rules" ref="Form" label-width="100px" class="demo-Form">
   <el-form-item label="车牌号" prop="carnumber">
     <el-input placeholder="车牌号" v-model="Form.carnumber" style="%80"></el-input>

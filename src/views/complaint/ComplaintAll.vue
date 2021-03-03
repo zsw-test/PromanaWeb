@@ -1,10 +1,12 @@
 <template>
-  <div>
- 
+  <div class="app-container">
+
   <el-table
     :data="tableData"
-    border
-    style="width:100%">
+      element-loading-text="Loading"
+      border
+      fit
+      highlight-current-row>
     <el-table-column
       prop="ID"
       label="缴费单号"

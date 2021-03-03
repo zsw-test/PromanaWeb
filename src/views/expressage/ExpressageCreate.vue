@@ -1,5 +1,6 @@
 <template>
- <div>
+  <div class="app-container">
+
 
 <el-form :model="Form" :rules="rules" ref="Form" label-width="100px" class="demo-Form">
   <el-form-item label="收件人" prop="Ownername">
