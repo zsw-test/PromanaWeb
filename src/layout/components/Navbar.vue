@@ -35,6 +35,7 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
+import Cookies from 'js-cookie'
 
 export default {
   components: {
@@ -52,8 +53,12 @@ export default {
       this.$store.dispatch('app/toggleSideBar')
     },
     async logout() {
-     localStorage.removeItem('token')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      Cookies.remove('token')
+      Cookies.remove('role')
+      Cookies.remove('username')
+      Cookies.remove('ID')
+     // this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+     this.$router.push(`/login`)
     }
   }
 }

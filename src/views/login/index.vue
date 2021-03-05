@@ -40,6 +40,12 @@
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
       </el-form-item>
+      <el-form-item prop="Radio">
+          <el-radio v-model="loginForm.Radio" label="owner">业主</el-radio>
+           <el-radio v-model="loginForm.Radio" label="manager">管理员</el-radio>
+      </el-form-item>
+
+        
 
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
 
@@ -50,7 +56,7 @@
 
 <script>
 import { validUsername } from '@/utils/validate'
-
+import Cookies from 'js-cookie'
 export default {
   name: 'Login',
   data() {
@@ -70,8 +76,9 @@ export default {
     // }
     return {
       loginForm: {
-        Username: 'admin',
-        Password: '111111'
+        Username: 'zsw0',
+        Password: '123456',
+        Radio:'owner'
       },
       loginRules: {
         Username: [{ required: true, trigger: 'blur'}],
@@ -110,13 +117,23 @@ export default {
           // }).catch(() => {
           //   this.loading = false
           // })
-           this.$axios.post('http://127.0.0.1:31717/api/ownerlogin',this.loginForm).then((response)=>{
+          console.log(this.loginForm.Radio)
+          var url = 'http://127.0.0.1:31717/api/ownerlogin'
+          if(this.loginForm.Radio==='manager'){
+            url = 'http://127.0.0.1:31717/api/managerlogin'
+          }
+           this.$axios.post(url,this.loginForm).then((response)=>{
                      console.log(response.data);
                      if(response.data.code==1)
                      {
                         localStorage.setItem('token',response.data.data.token)
+                        Cookies.set('token',response.data.data.token)
+                        Cookies.set('username',this.loginForm.Username)
+                        Cookies.set('role',this.loginForm.Radio)
+                        Cookies.set('ID',response.data.data.id)
                            this.$message('登陆成功!');
-                          this.$router.push({ path: this.redirect || '/' })
+                        //  this.$router.push({ path: this.redirect || '/' })
+                          this.$router.push({ path: '/' })
                      }else{
                           this.$message('登陆失败!'+response.data.result);
                      }
@@ -125,6 +142,7 @@ export default {
                 })
 
         } else {
+           this.$message('error submit!!');
           console.log('error submit!!')
           return false
         }

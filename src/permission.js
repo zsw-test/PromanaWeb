@@ -5,10 +5,12 @@ import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 import { getToken } from '@/utils/auth' // get token from cookie
 import getPageTitle from '@/utils/get-page-title'
+import Cookies from 'js-cookie'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 const whiteList = ['/login'] // no redirect whitelist
+const role = Cookies.get('role')
 
 router.beforeEach(async(to, from, next) => {
 
@@ -16,6 +18,13 @@ router.beforeEach(async(to, from, next) => {
     localStorage.clear()
     return next('/login')
   }
+
+  if(to.meta.roles==null||to.meta.roles.includes(role)){
+    next()
+  }else{
+    next({path:"/404"})	//跳到404页面
+  }
+
    next()
 
 

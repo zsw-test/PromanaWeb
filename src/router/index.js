@@ -60,19 +60,19 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/example/table',
     name: 'Example',
-    meta: { title: 'Example', icon: 'el-icon-s-help' },
+    meta: { title: 'Example', icon: 'el-icon-s-help',roles:['manager','owner']},
     children: [
       {
         path: 'table',
         name: 'Table',
         component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
+        meta: { title: 'Table', icon: 'table' ,roles:['manager','owner']},
       },
       {
         path: 'tree',
         name: 'Tree',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
+        meta: { title: 'Tree', icon: 'tree' ,roles:['manager','owner']},
       }
     ]
   },
@@ -81,31 +81,31 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/Manager/ManagerAll',
     name: 'Manager',
-    meta: { title: '人员管理', icon: 'el-icon-s-help' },
+    meta: { title: '人员管理', icon: 'el-icon-s-help' ,roles:['manager']},
     children: [
       {
         path: 'ManagerAll',
         name: 'ManagerAll',
         component: () => import('@/views/manager/ManagerAll'),
-        meta: { title: 'ManagerAll', icon: 'table' }
+        meta: { title: 'ManagerAll', icon: 'table',roles:['manager']},
       },
       {
         path: 'ManagerAdd',
         name: 'ManagerAdd',
         component: () => import('@/views/manager/ManagerAdd'),
-        meta: { title: 'ManagerAdd', icon: 'tree' }
+        meta: { title: 'ManagerAdd', icon: 'tree' ,roles:['manager']},
       },
       {
         path: 'OwnerAll',
         name: 'OwnerAll',
         component: () => import('@/views/manager/OwnerAll'),
-        meta: { title: 'OwnerAll', icon: 'tree' }
+        meta: { title: 'OwnerAll', icon: 'tree' ,roles:['manager']},
       },
       {
         path: 'OwnerAdd',
         name: 'OwnerAdd',
         component: () => import('@/views/manager/OwnerAdd'),
-        meta: { title: 'OwnerAdd', icon: 'tree' }
+        meta: { title: 'OwnerAdd', icon: 'tree' ,roles:['manager']},
       },
     ]
   },
