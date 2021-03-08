@@ -23,6 +23,7 @@
  </div>
 </template>
 <script>
+import service from "@/utils/request"
   export default {
     data() {
       return {
@@ -57,7 +58,7 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.ruleForm.Houseid = Number(this.ruleForm.Houseid)
-             this.$axios.post('http://127.0.0.1:31717/api/ownerregister',this.ruleForm).then((response)=>{
+             service.post('/api/ownerregister',this.ruleForm).then((response)=>{
                      console.log(response.data);
                      if(response.data.code==1)
                      {

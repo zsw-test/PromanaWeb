@@ -21,6 +21,7 @@
  </div>
 </template>
 <script>
+import service from "@/utils/request"
   export default {
     data() {
       return {
@@ -48,7 +49,7 @@
           if (valid) {
               this.ruleForm.Ownerid = Number(this.ruleForm.Ownerid)
                 this.ruleForm.Status = Number(this.ruleForm.Status)
-             this.$axios.post('http://127.0.0.1:31717/api/managerauth/park',this.ruleForm).then((response)=>{
+             service.post('/api/managerauth/park',this.ruleForm).then((response)=>{
                      console.log(response.data);
                      if(response.data.code==1)
                      {

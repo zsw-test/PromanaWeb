@@ -109,6 +109,7 @@
 </template>
 
 <script>
+import service from "@/utils/request"
 /* eslint-disable */ 
 export default {
    methods: {
@@ -117,7 +118,7 @@ export default {
          this.$message("该用户没有车位！")
          return 
        }
-         this.$axios.delete('http://127.0.0.1:31717/api/managerauth/owneruntiepark/'+row.ID).then((response)=>{
+         service.delete('/api/managerauth/owneruntiepark/'+row.ID).then((response)=>{
                         console.log(response.data);
                          this.$message(response.data.result)
                          this.getData()
@@ -128,7 +129,7 @@ export default {
      saveForm(formName){
        this.$refs[formName].validate((valid) => {
           if (valid) {
-             this.$axios.put('http://127.0.0.1:31717/api/managerauth/owner/'+this.editForm.ID,this.editForm).then((response)=>{
+             service.put('/api/managerauth/owner/'+this.editForm.ID,this.editForm).then((response)=>{
                      console.log(response.data);
                       this.$message(response.data.result); 
                       //如果修改成功  消失对话框
@@ -152,7 +153,7 @@ export default {
         this.editForm = row
      },
       removeRow() {
-         this.$axios.delete('http://127.0.0.1:31717/api/managerauth/owner/'+this.removeID).then((response)=>{
+         service.delete('/api/managerauth/owner/'+this.removeID).then((response)=>{
                         console.log(response.data);
                          this.$message(response.data.result)
                          this.getData()
@@ -168,13 +169,13 @@ export default {
         console.log(row);
       },
       getData(){
-                  this.$axios.get('http://127.0.0.1:31717/api/managerauth/ownertotal').then((response)=>{
+                  service.get('/api/managerauth/ownertotal').then((response)=>{
                         console.log(response.data.data.count);
                     this.total = response.data.data.count
                 }).catch((response)=>{
                     console.log(response);
                 })
-                this.$axios.get('http://127.0.0.1:31717/api/managerauth/ownerpage?pageindex='+this.pageindex+'&pagesize='+this.pagesize).then((response)=>{
+                service.get('api/managerauth/ownerpage?pageindex='+this.pageindex+'&pagesize='+this.pagesize).then((response)=>{
                     this.tableData = response.data.data
                      console.log(response.data.data);
                 }).catch((response)=>{
@@ -182,13 +183,13 @@ export default {
                 })
       },
       page(currentpage){
-                     this.$axios.get('http://127.0.0.1:31717/api/managerauth/ownertotal').then((response)=>{
+                     service.get('/api/managerauth/ownertotal').then((response)=>{
                         console.log(response.data.data.count);
                     this.total = response.data.data.count
                 }).catch((response)=>{
                     console.log(response);
                 })
-                this.$axios.get('http://127.0.0.1:31717/api/managerauth/ownerpage?pageindex='+currentpage+'&pagesize='+this.pagesize).then((response)=>{
+                service.get('/api/managerauth/ownerpage?pageindex='+currentpage+'&pagesize='+this.pagesize).then((response)=>{
                     this.tableData = response.data.data
                      console.log(response);
                 }).catch((response)=>{

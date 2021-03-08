@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import service from "@/utils/request"
 export default {
     data() {
       return {
@@ -55,7 +56,7 @@ export default {
        ParkInfoDelete(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.$axios.delete('http://127.0.0.1:31717/api/ownerauth/parkinfo/'+this.Form.carnumber).then((response)=>{
+            service.delete('/api/ownerauth/parkinfo/'+this.Form.carnumber).then((response)=>{
               if(response.data.code==1)
               {
                     this.$message(response.data.result)
@@ -77,7 +78,7 @@ export default {
          ParkInfoIn(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.$axios.post('http://127.0.0.1:31717/api/ownerauth/parkinfo/'+this.Form.carnumber).then((response)=>{
+            service.post('/api/ownerauth/parkinfo/'+this.Form.carnumber).then((response)=>{
               if(response.data.code==1)
               {
                     this.$message(response.data.result)
@@ -99,7 +100,7 @@ export default {
          ParkInfoOut(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.$axios.get('http://127.0.0.1:31717/api/ownerauth/parkinfo/'+this.Form.carnumber).then((response)=>{
+            service.get('/api/ownerauth/parkinfo/'+this.Form.carnumber).then((response)=>{
               if(response.data.code==1)
               {
                   this.ParkinfoData = response.data.data

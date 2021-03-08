@@ -90,12 +90,14 @@
 
 <script>
 /* eslint-disable */ 
+import service from "@/utils/request"
 export default {
+  
    methods: {
      saveForm(formName){
        this.$refs[formName].validate((valid) => {
           if (valid) {
-             this.$axios.put('http://127.0.0.1:31717/api/managerauth/park/'+this.ruleForm.ID,this.ruleForm).then((response)=>{
+             service.put('/api/managerauth/park/'+this.ruleForm.ID,this.ruleForm).then((response)=>{
                      console.log(response.data);
                       this.$message(response.data.result); 
                       //如果修改成功  消失对话框
@@ -119,7 +121,7 @@ export default {
         this.ruleForm = row
      },
       removeRow() {
-         this.$axios.delete('http://127.0.0.1:31717/api/managerauth/park/'+this.removeID).then((response)=>{
+         service.delete('/api/managerauth/park/'+this.removeID).then((response)=>{
                         console.log(response.data);
                          this.$message(response.data.result)
                          this.getData()
@@ -132,13 +134,13 @@ export default {
          this.removeID = row.ID
       },
       getData(){
-                  this.$axios.get('http://127.0.0.1:31717/api/managerauth/parktotal').then((response)=>{
+                  service.get('/api/managerauth/parktotal').then((response)=>{
                         console.log(response.data.data.count);
                     this.total = response.data.data.count
                 }).catch((response)=>{
                     console.log(response);
                 })
-                this.$axios.get('http://127.0.0.1:31717/api/managerauth/parkpage?pageindex='+this.pageindex+'&pagesize='+this.pagesize).then((response)=>{
+                service.get('/api/managerauth/parkpage?pageindex='+this.pageindex+'&pagesize='+this.pagesize).then((response)=>{
                     this.tableData = response.data.data
                      console.log(response.data.data);
                 }).catch((response)=>{
@@ -146,13 +148,13 @@ export default {
                 })
       },
       page(currentpage){
-                     this.$axios.get('http://127.0.0.1:31717/api/managerauth/parktotal').then((response)=>{
+                     service.get('/api/managerauth/parktotal').then((response)=>{
                         console.log(response.data.data.count);
                     this.total = response.data.data.count
                 }).catch((response)=>{
                     console.log(response);
                 })
-                this.$axios.get('http://127.0.0.1:31717/api/managerauth/parkpage?pageindex='+currentpage+'&pagesize='+this.pagesize).then((response)=>{
+                service.get('/api/managerauth/parkpage?pageindex='+currentpage+'&pagesize='+this.pagesize).then((response)=>{
                     this.tableData = response.data.data
                      console.log(response);
                 }).catch((response)=>{

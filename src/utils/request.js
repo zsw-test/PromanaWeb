@@ -5,9 +5,9 @@ import { getToken } from '@/utils/auth'
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 // create an axios instance
 const service = axios.create({
-  // baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
+   baseURL: "http://112.124.103.203:31717", // url = base url + request url
   // // withCredentials: true, // send cookies when cross-domain requests
-  // timeout: 5000 // request timeout
+   timeout: 5000, // request timeout
   withCredentials: true // 允许携带cookie
 })
 

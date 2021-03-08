@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import service from "@/utils/request"
   export default {
         created(){
             this.getParklist()
@@ -52,7 +53,7 @@
     },
      methods: {
        getParklist(){
-             this.$axios.get('http://127.0.0.1:31717/api/ownerauth/park').then((response)=>{
+             service.get('/api/ownerauth/park').then((response)=>{
                         console.log(response.data.data);
                     this.ParkList = response.data.data
                 }).catch((response)=>{
@@ -63,7 +64,7 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.form.Ownerid = Number(this.form.Ownerid)
-            this.$axios.post('http://127.0.0.1:31717/api/ownerauth/parkbuy',this.form).then((response)=>{
+            service.post('/api/ownerauth/parkbuy',this.form).then((response)=>{
               if(response.data.code==1)
               {
                    this.$message(response.data.result)

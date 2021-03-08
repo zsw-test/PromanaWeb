@@ -113,6 +113,7 @@
 </template>
 
 <script>
+import service from "@/utils/request"
 /* eslint-disable */ 
 export default {
    methods: {
@@ -121,7 +122,7 @@ export default {
           if (valid) {
              this.ruleForm.Age=Number(this.ruleForm.Age)
             this.ruleForm.HouseId=Number(this.ruleForm.HouseId)
-             this.$axios.put('http://127.0.0.1:31717/api/managerauth/resident/'+this.ruleForm.ID,this.ruleForm).then((response)=>{
+             service.put('/api/managerauth/resident/'+this.ruleForm.ID,this.ruleForm).then((response)=>{
                      console.log(response.data);
                       this.$message(response.data.result); 
                       //如果修改成功  消失对话框
@@ -145,7 +146,7 @@ export default {
         this.ruleForm = row
      },
       removeRow() {
-         this.$axios.delete('http://127.0.0.1:31717/api/managerauth/resident/'+this.removeID).then((response)=>{
+         service.delete('/api/managerauth/resident/'+this.removeID).then((response)=>{
                         console.log(response.data);
                          this.$message(response.data.result)
                          this.getData()
@@ -158,13 +159,13 @@ export default {
          this.removeID = row.ID
       },
       getData(){
-                  this.$axios.get('http://127.0.0.1:31717/api/managerauth/residenttotal').then((response)=>{
+                  service.get('/api/managerauth/residenttotal').then((response)=>{
                         console.log(response.data.data.count);
                     this.total = response.data.data.count
                 }).catch((response)=>{
                     console.log(response);
                 })
-                this.$axios.get('http://127.0.0.1:31717/api/managerauth/residentpage?pageindex='+this.pageindex+'&pagesize='+this.pagesize).then((response)=>{
+                service.get('/api/managerauth/residentpage?pageindex='+this.pageindex+'&pagesize='+this.pagesize).then((response)=>{
                     this.tableData = response.data.data
                      console.log(response.data.data);
                 }).catch((response)=>{
@@ -172,13 +173,13 @@ export default {
                 })
       },
       page(currentpage){
-                     this.$axios.get('http://127.0.0.1:31717/api/managerauth/residenttotal').then((response)=>{
+                     service.get('/api/managerauth/residenttotal').then((response)=>{
                         console.log(response.data.data.count);
                     this.total = response.data.data.count
                 }).catch((response)=>{
                     console.log(response);
                 })
-                this.$axios.get('http://127.0.0.1:31717/api/managerauth/residentpage?pageindex='+currentpage+'&pagesize='+this.pagesize).then((response)=>{
+                service.get('/api/managerauth/residentpage?pageindex='+currentpage+'&pagesize='+this.pagesize).then((response)=>{
                     this.tableData = response.data.data
                      console.log(response);
                 }).catch((response)=>{

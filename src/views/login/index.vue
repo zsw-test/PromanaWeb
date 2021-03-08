@@ -57,6 +57,7 @@
 <script>
 import { validUsername } from '@/utils/validate'
 import Cookies from 'js-cookie'
+import service from "@/utils/request"
 export default {
   name: 'Login',
   data() {
@@ -118,11 +119,11 @@ export default {
           //   this.loading = false
           // })
           console.log(this.loginForm.Radio)
-          var url = 'http://127.0.0.1:31717/api/ownerlogin'
+          var url = '/api/ownerlogin'
           if(this.loginForm.Radio==='manager'){
-            url = 'http://127.0.0.1:31717/api/managerlogin'
+            url = '/api/managerlogin'
           }
-           this.$axios.post(url,this.loginForm).then((response)=>{
+           service.post(url,this.loginForm).then((response)=>{
                      console.log(response.data);
                      if(response.data.code==1)
                      {

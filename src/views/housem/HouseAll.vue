@@ -109,6 +109,7 @@
 </template>
 
 <script>
+import service from "@/utils/request"
 /* eslint-disable */ 
 export default {
    methods: {
@@ -116,7 +117,7 @@ export default {
        this.$refs[formName].validate((valid) => {
           if (valid) {
              this.ruleForm.Ownerid=Number(this.ruleForm.Ownerid)
-             this.$axios.put('http://127.0.0.1:31717/api/managerauth/house/'+this.ruleForm.ID,this.ruleForm).then((response)=>{
+             service.put('/api/managerauth/house/'+this.ruleForm.ID,this.ruleForm).then((response)=>{
                      console.log(response.data);
                       this.$message(response.data.result); 
                       //如果修改成功  消失对话框
@@ -140,7 +141,7 @@ export default {
         this.ruleForm = row
      },
       removeRow() {
-         this.$axios.delete('http://127.0.0.1:31717/api/managerauth/house/'+this.removeID).then((response)=>{
+         service.delete('/api/managerauth/house/'+this.removeID).then((response)=>{
                         console.log(response.data);
                          this.$message(response.data.result)
                          this.getData()
@@ -153,13 +154,13 @@ export default {
          this.removeID = row.ID
       },
       getData(){
-                  this.$axios.get('http://127.0.0.1:31717/api/managerauth/housetotal').then((response)=>{
+                  service.get('/api/managerauth/housetotal').then((response)=>{
                         console.log(response.data.data.count);
                     this.total = response.data.data.count
                 }).catch((response)=>{
                     console.log(response);
                 })
-                this.$axios.get('http://127.0.0.1:31717/api/managerauth/housepage?pageindex='+this.pageindex+'&pagesize='+this.pagesize).then((response)=>{
+                service.get('/api/managerauth/housepage?pageindex='+this.pageindex+'&pagesize='+this.pagesize).then((response)=>{
                     this.tableData = response.data.data
                      console.log(response.data.data);
                 }).catch((response)=>{
@@ -167,13 +168,13 @@ export default {
                 })
       },
       page(currentpage){
-                     this.$axios.get('http://127.0.0.1:31717/api/managerauth/housetotal').then((response)=>{
+                     service.get('/api/managerauth/housetotal').then((response)=>{
                         console.log(response.data.data.count);
                     this.total = response.data.data.count
                 }).catch((response)=>{
                     console.log(response);
                 })
-                this.$axios.get('http://127.0.0.1:31717/api/managerauth/housepage?pageindex='+currentpage+'&pagesize='+this.pagesize).then((response)=>{
+                service.get('/api/managerauth/housepage?pageindex='+currentpage+'&pagesize='+this.pagesize).then((response)=>{
                     this.tableData = response.data.data
                      console.log(response);
                 }).catch((response)=>{

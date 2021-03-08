@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import service from "@/utils/request"
 export default {
     data() {
       return {
@@ -31,7 +32,7 @@ export default {
          submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.$axios.get('http://127.0.0.1:31717/api/ownerauth/carinfo/'+this.Form.carnumber).then((response)=>{
+            service.get('/api/ownerauth/carinfo/'+this.Form.carnumber).then((response)=>{
               if(response.data.code==1)
               {
                    this.$message("车辆类型:"+response.data.data.CarType)

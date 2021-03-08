@@ -106,7 +106,7 @@ export default {
        this.$refs[formName].validate((valid) => {
           if (valid) {
             
-             this.$axios.put('http://127.0.0.1:31717/api/managerauth/manager/'+this.editForm.ID,this.editForm).then((response)=>{
+             service.put('/managerauth/manager/'+this.editForm.ID,this.editForm).then((response)=>{
                      console.log(response.data);
                       this.$message(response.data.result); 
                       //如果修改成功  消失对话框
@@ -130,7 +130,7 @@ export default {
         this.editForm = row
      },
       removeRow() {
-         this.$axios.delete('http://127.0.0.1:31717/api/managerauth/manager/'+this.removeID).then((response)=>{
+         service.delete('/api/managerauth/manager/'+this.removeID).then((response)=>{
                         console.log(response.data);
                          this.$message(response.data.result)
                          this.getData()
@@ -144,13 +144,13 @@ export default {
       },
       getData(){
 
-                  service.get('http://127.0.0.1:31717/api/managerauth/managertotal',).then((response)=>{
+                  service.get('/api/managerauth/managertotal',).then((response)=>{
                         console.log(response.data.data.count);
                     this.total = response.data.data.count
                 }).catch((response)=>{
                     console.log(response);
                 })
-                service.get('http://127.0.0.1:31717/api/managerauth/managerpage?pageindex='+this.pageindex+'&pagesize='+this.pagesize).then((response)=>{
+                service.get('/api/managerauth/managerpage?pageindex='+this.pageindex+'&pagesize='+this.pagesize).then((response)=>{
                     this.tableData = response.data.data
                      console.log(response.data.data);
                 }).catch((response)=>{

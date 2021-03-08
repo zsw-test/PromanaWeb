@@ -58,6 +58,7 @@
 </template>
 
 <script>
+import service from "@/utils/request"
 export default {
     methods:{
         queryCharge(row){

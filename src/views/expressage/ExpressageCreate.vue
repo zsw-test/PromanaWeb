@@ -24,6 +24,7 @@
  </div>
 </template>
 <script>
+import service from "@/utils/request"
   export default {
     data() {
       return {
@@ -56,7 +57,7 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             
-             this.$axios.post('http://127.0.0.1:31717/api/managerauth/expressage',this.Form).then((response)=>{
+             service.post('/api/managerauth/expressage',this.Form).then((response)=>{
                      console.log(response.data);
                      if(response.data.code==1)
                      {
