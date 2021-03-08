@@ -68,13 +68,13 @@ export default {
                    this.getData()
           },
          getData(){
-                  this.$axios.get('http://127.0.0.1:31717/api/managerauth/parkinfototal').then((response)=>{
+                  service.get('/managerauth/parkinfototal').then((response)=>{
                         console.log(response.data.data.count);
                     this.total = response.data.data.count
                 }).catch((response)=>{
                     console.log(response);
                 })
-                this.$axios.get('http://127.0.0.1:31717/api/managerauth/parkinfopage?pageindex='+this.pageindex+'&pagesize='+this.pagesize).then((response)=>{
+                service.get('/managerauth/parkinfopage?pageindex='+this.pageindex+'&pagesize='+this.pagesize).then((response)=>{
                     this.tableData = response.data.data
                      console.log(response.data.data);
                 }).catch((response)=>{
