@@ -30,8 +30,9 @@ import { isExternal } from '@/utils/validate'
 import Item from './Item'
 import AppLink from './Link'
 import FixiOSBug from './FixiOSBug'
-
+import Cookies from 'js-cookie'
 export default {
+  role:Cookies.get("role"),
   name: 'SidebarItem',
   components: { Item, AppLink },
   mixins: [FixiOSBug],

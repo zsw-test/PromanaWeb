@@ -120,7 +120,6 @@ export default {
        this.$refs[formName].validate((valid) => {
           if (valid) {
              this.ruleForm.Age=Number(this.ruleForm.Age)
-            this.ruleForm.IdCard=Number(this.ruleForm.IdCard)
             this.ruleForm.HouseId=Number(this.ruleForm.HouseId)
              this.$axios.put('http://127.0.0.1:31717/api/managerauth/resident/'+this.ruleForm.ID,this.ruleForm).then((response)=>{
                      console.log(response.data);
@@ -218,6 +217,7 @@ export default {
           ],
           IdCard: [
             { required: true, message: '请输入身份证', trigger: 'change' },
+            {min:18,max:18}
           ],
           HouseId: [
             {required: true, message: '请输入房屋ID', trigger: 'change' },

@@ -1,18 +1,20 @@
 <template>
   <div class="dashboard-container">
-    <div class="dashboard-text">name: {{ name }}</div>
+    <div class="dashboard-text">welcome {{role}}: {{ name }}</div>
+    
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import Cookies from 'js-cookie'
 
 export default {
-  name: 'Dashboard',
-  computed: {
-    ...mapGetters([
-      'name'
-    ])
+  
+  data(){
+    return{
+      role:Cookies.get("role"),
+      name: Cookies.get("username"),
+    }
   }
 }
 </script>

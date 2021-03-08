@@ -127,6 +127,9 @@ export default {
                      if(response.data.code==1)
                      {
                         localStorage.setItem('token',response.data.data.token)
+                        localStorage.setItem('username',this.loginForm.Username)
+                        localStorage.setItem('role',this.loginForm.Radio)
+                        localStorage.setItem('ID',response.data.data.id)
                         Cookies.set('token',response.data.data.token)
                         Cookies.set('username',this.loginForm.Username)
                         Cookies.set('role',this.loginForm.Radio)

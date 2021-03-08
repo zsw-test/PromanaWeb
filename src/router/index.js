@@ -5,7 +5,7 @@ Vue.use(Router)
 
 /* Layout */
 import Layout from '@/layout'
-
+import Cookies from 'js-cookie'
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -57,6 +57,7 @@ export const constantRoutes = [
 
   {
     path: '/example',
+    hidden: Cookies.get('role')!='manager',
     component: Layout,
     redirect: '/example/table',
     name: 'Example',
@@ -76,35 +77,36 @@ export const constantRoutes = [
       }
     ]
   },
+
   {
-    path: '/Manager',
+    path: '/StuffManage',
     component: Layout,
-    redirect: '/Manager/ManagerAll',
-    name: 'Manager',
-    meta: { title: '人员管理', icon: 'el-icon-s-help' ,roles:['manager']},
+    redirect: '/StuffManage/ManagerAll',
+    name: 'StuffManage',
+    meta: { title: 'StuffManage', icon: 'el-icon-s-help' ,roles:['manager']},
     children: [
       {
         path: 'ManagerAll',
         name: 'ManagerAll',
-        component: () => import('@/views/manager/ManagerAll'),
+        component: () => import('@/views/stuffmanage/ManagerAll'),
         meta: { title: 'ManagerAll', icon: 'table',roles:['manager']},
       },
       {
         path: 'ManagerAdd',
         name: 'ManagerAdd',
-        component: () => import('@/views/manager/ManagerAdd'),
+        component: () => import('@/views/stuffmanage/ManagerAdd'),
         meta: { title: 'ManagerAdd', icon: 'tree' ,roles:['manager']},
       },
       {
         path: 'OwnerAll',
         name: 'OwnerAll',
-        component: () => import('@/views/manager/OwnerAll'),
+        component: () => import('@/views/stuffmanage/OwnerAll'),
         meta: { title: 'OwnerAll', icon: 'tree' ,roles:['manager']},
       },
       {
         path: 'OwnerAdd',
         name: 'OwnerAdd',
-        component: () => import('@/views/manager/OwnerAdd'),
+        component: () => import('@/views/stuffmanage/OwnerAdd'),
         meta: { title: 'OwnerAdd', icon: 'tree' ,roles:['manager']},
       },
     ]

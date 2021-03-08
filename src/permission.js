@@ -14,12 +14,11 @@ const role = Cookies.get('role')
 
 router.beforeEach(async(to, from, next) => {
 
-  if (to.path !== '/login' && !localStorage.token) {
-    localStorage.clear()
-    return next('/login')
-  }
-
-  if(to.meta.roles==null||to.meta.roles.includes(role)){
+  // if (to.path !== '/login' && !localStorage.token) {
+  //   localStorage.clear()
+  //   return next('/login')
+  // }
+  if(to.meta.roles==null||to.meta.roles.includes(Cookies.get('role'))){
     next()
   }else{
     next({path:"/404"})	//跳到404页面
