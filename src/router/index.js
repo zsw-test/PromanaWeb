@@ -227,6 +227,7 @@ export const constantRoutes = [
   {
     path: '/Complaint',
     component: Layout,
+    hidden: Cookies.get('role')!='manager',
     redirect: '/Complaint/ComplaintAll',
     name: 'Complaint',
     meta: { title: 'Complaint', icon: 'el-icon-s-help' },
@@ -286,6 +287,7 @@ export const constantRoutes = [
   {
     path: '/Expressage',
     component: Layout,
+    hidden: Cookies.get('role')!='manager',
     redirect: '/Expressage/ExpressageAll',
     name: 'Expressage',
     meta: { title: 'Expressage', icon: 'el-icon-s-help' },

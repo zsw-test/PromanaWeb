@@ -21,6 +21,7 @@ router.beforeEach(async(to, from, next) => {
   if(to.meta.roles==null||to.meta.roles.includes(Cookies.get('role'))){
     next()
   }else{
+    Message("没有权限操作页面")
     next({path:"/404"})	//跳到404页面
   }
 
