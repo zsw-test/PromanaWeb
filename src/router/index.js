@@ -82,6 +82,7 @@ export const constantRoutes = [
     path: '/StuffManage',
     component: Layout,
     redirect: '/StuffManage/ManagerAll',
+    hidden: Cookies.get('role')!='manager',
     name: 'StuffManage',
     meta: { title: 'StuffManage', icon: 'el-icon-s-help' ,roles:['manager']},
     children: [
@@ -113,6 +114,7 @@ export const constantRoutes = [
   },
   {
     path: '/Charge',
+    hidden: Cookies.get('role')!='manager',
     component: Layout,
     redirect: '/Charge/ChargeAll',
     name: 'Charge',
@@ -134,6 +136,7 @@ export const constantRoutes = [
   },
   {
     path: '/HouseM',
+    hidden: Cookies.get('role')!='manager',
     component: Layout,
     redirect: '/HouseM/HouseAll',
     name: 'HouseM',
@@ -155,6 +158,7 @@ export const constantRoutes = [
   },
   {
     path: '/ParkO',
+    hidden: Cookies.get('role')!='owner',
     component: Layout,
     redirect: '/ParkO/CarinfoGet',
     name: 'ParkO',
@@ -188,6 +192,7 @@ export const constantRoutes = [
   },
   {
     path: '/ParkM',
+    hidden: Cookies.get('role')!='manager',
     component: Layout,
     redirect: '/ParkM/CarinfoAll',
     name: 'ParkM',
@@ -235,17 +240,46 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/Repair',
+    path: '/RepairM',
+    hidden: Cookies.get('role')!='manager',
     component: Layout,
-    redirect: '/Repair/RepairAll',
-    name: 'Repair',
-    meta: { title: 'Repair', icon: 'el-icon-s-help' },
+    redirect: '/RepairM/RepairAll',
+    name: 'RepairM',
+    meta: { title: 'RepairM', icon: 'el-icon-s-help' },
     children: [
       {
         path: 'RepairAll',
         name: 'RepairAll',
-        component: () => import('@/views/repair/RepairAll'),
+        component: () => import('@/views/repairm/RepairAll'),
         meta: { title: 'RepairAll', icon: 'table' }
+      },
+      {
+        path: 'RepairGet',
+        name: 'RepairGet',
+        component: () => import('@/views/repairm/RepairGet'),
+        meta: { title: 'RepairGet', icon: 'table' }
+      },
+    ]
+  },
+  {
+    path: '/RepairO',
+    hidden: Cookies.get('role')!='owner',
+    component: Layout,
+    redirect: '/RepairO/RepairAdd',
+    name: 'RepairO',
+    meta: { title: 'RepairO', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'RepairAdd',
+        name: 'RepairAdd',
+        component: () => import('@/views/repairo/RepairAdd'),
+        meta: { title: 'RepairAdd', icon: 'table' }
+      },
+      {
+        path: 'RepairGet',
+        name: 'RepairGet',
+        component: () => import('@/views/repairo/RepairGet'),
+        meta: { title: 'RepairGet', icon: 'table' }
       },
     ]
   },

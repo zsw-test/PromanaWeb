@@ -13,8 +13,8 @@
       width="120">
     </el-table-column>
     <el-table-column
-      prop="Owneraddress"
-      label="业主地址"
+      prop="Address"
+      label="地址"
       width="120">
     </el-table-column>
     <el-table-column
@@ -28,11 +28,6 @@
       width="120">
     </el-table-column>
     <el-table-column
-      prop="Ownername"
-      label="业主姓名"
-      width="120">
-    </el-table-column>
-        <el-table-column
       prop="Status"
       label="状态"
       width="120">
@@ -47,23 +42,11 @@
       label="操作"
       width="200">
       <template slot-scope="scope">
-        <el-button @click="queryCharge(scope.row)" type="primary" size="medium">查看</el-button>
+        <el-button @click="ChangeRepairStatus(scope.row)" type="primary" size="medium">已经解决</el-button>
         <el-button  type="danger" size="medium">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
-
-
-<el-pagination
-  background
-  layout="prev, pager, next"
-  :page-size.sync=pagesize
-  :current-page.sync=pageindex
-  :total=total
-  @current-change="page">
-</el-pagination>
-
-
 
   </div>
 </template>
@@ -81,31 +64,19 @@ export default {
                 }
                 return ret;
             },
-        queryCharge(row){
-            console.log(row)
+        ChangeRepairStatus(row){
+            service.put('api/managerauth/repairresolve',
+            {
+              ID:row.ID,
+            }).then((response)=>{
+                     this.$message(response.data.result)
+                     this.getData()
+                }).catch((response)=>{
+                    console.log(response);
+                })
         },
-              page(currentpage){
-                     service.get('/api/managerauth/repairtotal').then((response)=>{
-                        console.log(response.data.data.count);
-                    this.total = response.data.data.count
-                }).catch((response)=>{
-                    console.log(response);
-                })
-                service.get('/api/managerauth/repairpage?pageindex='+currentpage+'&pagesize='+this.pagesize).then((response)=>{
-                    this.tableData = response.data.data
-                     console.log(response.data.data);
-                }).catch((response)=>{
-                    console.log(response);
-                })
-          },
          getData(){
-                  service.get('/api/managerauth/repairtotal').then((response)=>{
-                        console.log(response.data.data.count);
-                    this.total = response.data.data.count
-                }).catch((response)=>{
-                    console.log(response);
-                })
-                service.get('/api/managerauth/repairpage?pageindex='+this.pageindex+'&pagesize='+this.pagesize).then((response)=>{
+                service.get('/api/managerauth/repairmanager?Managername='+this.Username,).then((response)=>{
                     this.tableData = response.data.data
                      console.log(response.data.data);
                 }).catch((response)=>{
@@ -116,10 +87,8 @@ export default {
 
         data(){
             return {
-                total:200,
                 tableData:[],
-                pageindex:1,
-                pagesize:5,
+                Username:localStorage.getItem("username")
             }
         },
         created(){

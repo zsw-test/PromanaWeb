@@ -9,27 +9,33 @@
       highlight-current-row>
     <el-table-column
       prop="ID"
-      label="停车账单号"
+      label="报修单号"
       width="120">
     </el-table-column>
     <el-table-column
-      prop="CarNumber"
-      label="车牌号"
+      prop="Address"
+      label="地址"
       width="120">
     </el-table-column>
     <el-table-column
       prop="CreatedAt"
-      label="入库时间"
+      label="报修时间"
       width="300">
     </el-table-column>
     <el-table-column
-      prop="Fee"
-      label="费用"
+      prop="Reason"
+      label="报修原因"
       width="120">
     </el-table-column>
     <el-table-column
-      prop="Parktime"
-      label="时长"
+      prop="Status"
+      label="状态"
+      width="120">
+    </el-table-column>
+        <el-table-column
+      prop="Resolve"
+      label="解决"
+      :formatter="formatBoolean"
       width="120">
     </el-table-column>
     <el-table-column
@@ -42,18 +48,6 @@
     </el-table-column>
   </el-table>
 
-
-<el-pagination
-  background
-  layout="prev, pager, next"
-  :page-size.sync=pagesize
-  :current-page.sync=pageindex
-  :total=total
-  @current-change="page">
-</el-pagination>
-
-
-
   </div>
 </template>
 
@@ -61,20 +55,20 @@
 import service from "@/utils/request"
 export default {
     methods:{
+          formatBoolean: function (row, column, cellValue) {
+                var ret = ''  //你想在页面展示的值
+                if (cellValue) {
+                    ret = "是"  //根据自己的需求设定
+                } else {
+                    ret = "否"
+                }
+                return ret;
+            },
         queryCharge(row){
             console.log(row)
         },
-              page(currentpage){
-                   this.getData()
-          },
          getData(){
-                  service.get('api/managerauth/parkinfototal').then((response)=>{
-                        console.log(response.data.data.count);
-                    this.total = response.data.data.count
-                }).catch((response)=>{
-                    console.log(response);
-                })
-                service.get('api/managerauth/parkinfopage?pageindex='+this.pageindex+'&pagesize='+this.pagesize).then((response)=>{
+                service.get('/api/ownerauth/repairowner?Ownername='+this.Ownername,).then((response)=>{
                     this.tableData = response.data.data
                      console.log(response.data.data);
                 }).catch((response)=>{
@@ -85,10 +79,8 @@ export default {
 
         data(){
             return {
-                total:200,
                 tableData:[],
-                pageindex:1,
-                pagesize:5,
+                Ownername:localStorage.getItem("username")
             }
         },
         created(){
