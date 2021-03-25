@@ -50,10 +50,11 @@
     </el-table-column>
     <el-table-column
       label="操作"
-      width="200">
+      width="250">
       <template slot-scope="scope">
-        <el-button @click="getData2(),dialogVisible = true,DispatchRowId=scope.row.ID" type="primary" size="medium">派人维修</el-button>
-        <el-button  type="danger" size="medium">删除</el-button>
+         <el-button @click="ShowRow(scope.row),dialogVisible2 = true" type="text" size="small">查看详情</el-button>
+        <el-button @click="getData2(),dialogVisible = true,DispatchRowId=scope.row.ID" type="primary" size="small">派人维修</el-button>
+        <el-button  @click="deleteRow(scope.row)" type="danger" size="small">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -83,7 +84,8 @@
       label="操作"
       width="100">
       <template slot-scope="scope">
-        <el-button @click="DispathchRow(scope.row),dialogVisible = false" type="primary" size="medium">派遣</el-button>
+       
+        <el-button @click="DispathchRow(scope.row),dialogVisible = false" type="primary" size="small">派遣</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -96,6 +98,25 @@
   @current-change="page2">
 </el-pagination>
 </el-dialog>
+
+
+<el-dialog
+  title="详情"
+  :visible.sync="dialogVisible2"
+  width="50%">
+   <el-card>保修人：{{this.ShowData.Ownername}}</el-card><br>
+ <el-card>报修时间：{{this.ShowData.CreatedAt}}</el-card><br>
+ <el-card>报修地点：{{this.ShowData.Address}}</el-card><br>
+  <el-card>报修照片：
+  <div class="demo-image__lazy">
+  <el-image v-for="url in this.ShowData.ShowList" :key="url" :src="url" lazy></el-image>
+</div>
+</el-card><br>
+  <span slot="footer" class="dialog-footer">
+    <el-button type="primary" @click="dialogVisible2 = false">确 定</el-button>
+  </span>
+</el-dialog>
+
 
 <el-pagination
   background
@@ -115,6 +136,15 @@
 import service from "@/utils/request"
 export default {
     methods:{
+      deleteRow(row){
+          service.delete('/api/managerauth/repair/'+row.ID).then((response)=>{
+                        console.log(response.data);
+                         this.$message(response.data.result)
+                         this.getData()
+                }).catch((response)=>{
+                    console.log(response);
+                })
+        },
           formatBoolean: function (row, column, cellValue) {
                 var ret = ''  //你想在页面展示的值
                 if (cellValue) {
@@ -164,6 +194,13 @@ export default {
                 })
                 service.get('/api/managerauth/repairpage?pageindex='+this.pageindex+'&pagesize='+this.pagesize).then((response)=>{
                     this.tableData = response.data.data
+                      for(var i=0;i<this.tableData.length;i++){
+                      if(this.tableData[i].Pics==""){
+                        this.tableData[i].Pics=[]
+                        continue;
+                      }
+                      this.tableData[i].Pics=JSON.parse(this.tableData[i].Pics)
+                    }
                      console.log(response.data.data);
                 }).catch((response)=>{
                     console.log(response);
@@ -175,13 +212,26 @@ export default {
               page2(currentpage){
                 this.getData2()
             },
+            ShowRow(row){
+            this.ShowData.ShowList = row.Pics
+            this.ShowData.Ownername = row.Ownername
+            this.ShowData.Address = row.Address
+            this.ShowData.CreatedAt = row.CreatedAt
+            },
         },
-          
+        
         
 
         data(){
             return {
+                ShowData:{
+                  ShowList:[],
+                  Ownername:null,
+                  Address:null,
+                  CreatedAt:null,
+                },
               dialogVisible: false,
+              dialogVisible2: false,
               DispatchManager:null,
               DispatchRowId:null,
                 total:200,

@@ -19,8 +19,8 @@
       width="120">
     </el-table-column>
     <el-table-column
-      prop="Password"
-      label="密码"
+      prop="Nickname"
+      label="昵称"
       width="120">
     </el-table-column>
     <el-table-column
@@ -64,6 +64,9 @@
       <el-form-item label="用户名" prop="Username">
         <el-input placeholder="请输入用户名" v-model="editForm.Username"></el-input>
       </el-form-item>
+      <el-form-item label="昵称" prop="Nickname">
+        <el-input placeholder="请输入昵称" v-model="editForm.Nickname"></el-input>
+      </el-form-item>
         <el-form-item label="密码" prop="Password">
         <el-input placeholder="请输入密码" v-model="editForm.Password" show-password></el-input>
       </el-form-item>
@@ -106,7 +109,7 @@ export default {
        this.$refs[formName].validate((valid) => {
           if (valid) {
             
-             service.put('/managerauth/manager/'+this.editForm.ID,this.editForm).then((response)=>{
+             service.put('api/managerauth/manager/'+this.editForm.ID,this.editForm).then((response)=>{
                      console.log(response.data);
                       this.$message(response.data.result); 
                       //如果修改成功  消失对话框
@@ -171,10 +174,15 @@ export default {
         editForm:{
           Username: '',
           Password: '',
+          Nickname:'',
           Depart: '',
           Telephone: '',
         },
         rules: {
+          Nickname: [
+            { required: true, message: '请输入昵称', trigger: 'blur' },
+            { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
+          ],
           Username: [
             { required: true, message: '请输入用户名', trigger: 'blur' },
             { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }

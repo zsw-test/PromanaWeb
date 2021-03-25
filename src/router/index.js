@@ -32,6 +32,10 @@ import Cookies from 'js-cookie'
  */
 export const constantRoutes = [
   {
+    path:'/black',
+    component:()=>import('@/views/black')
+  },
+  {
     path: '/login',
     component: () => import('@/views/login/index'),
     hidden: true
@@ -74,6 +78,12 @@ export const constantRoutes = [
         name: 'Tree',
         component: () => import('@/views/tree/index'),
         meta: { title: 'Tree', icon: 'tree' ,roles:['manager','owner']},
+      },
+      {
+        path: 'photo',
+        name: 'photo',
+        component: () => import('@/views/repairo/PhotoUp'),
+        meta: { title: 'photo', icon: 'tree' ,roles:['manager','owner']},
       }
     ]
   },
@@ -255,10 +265,10 @@ export const constantRoutes = [
         meta: { title: 'RepairAll', icon: 'table' }
       },
       {
-        path: 'RepairGet',
-        name: 'RepairGet',
+        path: 'RepairGetM',
+        name: 'RepairGetM',
         component: () => import('@/views/repairm/RepairGet'),
-        meta: { title: 'RepairGet', icon: 'table' }
+        meta: { title: 'RepairGetM', icon: 'table' }
       },
     ]
   },
@@ -277,10 +287,17 @@ export const constantRoutes = [
         meta: { title: 'RepairAdd', icon: 'table' }
       },
       {
-        path: 'RepairGet',
-        name: 'RepairGet',
+        path: 'RepairGetO',
+        name: 'RepairGetO',
         component: () => import('@/views/repairo/RepairGet'),
-        meta: { title: 'RepairGet', icon: 'table' }
+        meta: { title: 'RepairGetO', icon: 'table' }
+      },
+      {
+        path: 'RepairEdit',
+        name: 'RepairEdit',
+        hidden:true,
+        component: () => import('@/views/repairo/RepairEdit'),
+        meta: { title: 'RepairEdit', icon: 'table' }
       },
     ]
   },

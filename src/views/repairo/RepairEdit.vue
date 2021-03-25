@@ -25,7 +25,7 @@
         </el-dialog>
   </el-form-item>
   <el-form-item>
-    <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+    <el-button type="primary" @click="submitForm('ruleForm')">立即修改</el-button>
     <el-button @click="resetForm('ruleForm')">重置</el-button>
   </el-form-item>
 </el-form>
@@ -40,10 +40,12 @@ import service from "@/utils/request"
         dialogImageUrl: '',
         dialogVisible: false,
         fileList: [],
+        
         ruleForm: {
+            ID:null,
           Address: null,
           Reason: null,
-          Ownername:localStorage.getItem("username"),
+          Ownername:null,
           Pics:String,
         },
         rules: {
@@ -67,13 +69,13 @@ import service from "@/utils/request"
             }
             this.ruleForm.Pics = JSON.stringify(picsobj)
             console.log(JSON.parse(this.ruleForm.Pics))
-             service.post('/api/ownerauth/repair',this.ruleForm).then((response)=>{
+             service.put('/api/ownerauth/repair/'+this.ruleForm.ID,this.ruleForm).then((response)=>{
                      console.log(response.data);
                      if(response.data.code==1)
                      {
-                        this.$message('添加成功!');
+                        this.$message('修改成功!');
                      }else{
-                          this.$message('添加失败!'+response.data.result);
+                          this.$message('修改失败!'+response.data.result);
                      }
                 }).catch((response)=>{
                     console.log(response);
@@ -116,7 +118,44 @@ import service from "@/utils/request"
       handlePictureCardPreview(file) {
         this.dialogImageUrl = file.url;
         this.dialogVisible = true;
-      }
+      },
+    },
+    created(){
+        if(!this.$route.params.repairid) {
+            this.$router.push("/RepairO/RepairGet")
+            return 
+        }
+         service.get("api/ownerauth/repair/"+this.$route.params.repairid).then((response)=>{
+                    if(response.data.code==1){
+                        console.log(response.data.data)
+                        this.ruleForm.Address = response.data.data.Address
+                        this.ruleForm.Reason = response.data.data.Reason
+                        this.ruleForm.Ownername = response.data.data.Ownername
+                        this.ruleForm.ID = response.data.data.ID
+                        if(response.data.data.Pics==""){
+                            this.ruleForm.Pics = []
+                        }
+                        else{
+                            this.ruleForm.Pics = JSON.parse(response.data.data.Pics)
+                        }
+                        for(var i =0;i<this.ruleForm.Pics.length;i++)
+                        {
+
+                            this.fileList.push({
+                            name:this.ruleForm.Pics[i],
+                            url:this.ruleForm.Pics[i],
+                            })
+                        }
+                        console.log(this.fileList)
+                    }
+                    else{
+                        this.$message("res code!=1 获取失败")
+                    }
+                     console.log(response.data);
+                }).catch((response)=>{
+                    console.log(response);
+                })
     }
+    
   }
 </script>

@@ -19,8 +19,8 @@
       width="120">
     </el-table-column>
     <el-table-column
-      prop="Password"
-      label="密码"
+      prop="Nickname"
+      label="昵称"
       width="120">
     </el-table-column>
     <el-table-column
@@ -35,7 +35,7 @@
     </el-table-column>
      <el-table-column
       prop="Houseid"
-      label="房间号"
+      label="房间ID"
       width="120">
     </el-table-column>
         <el-table-column
@@ -76,18 +76,21 @@
       <el-form-item label="用户名" prop="Username">
     <el-input placeholder="请输入用户名" v-model="editForm.Username" style="%80"></el-input>
   </el-form-item>
+        <el-form-item label="昵称" prop="Nickname">
+    <el-input placeholder="请输入昵称" v-model="editForm.Nickname" style="%80"></el-input>
+  </el-form-item>
     <el-form-item label="密码" prop="Password">
     <el-input placeholder="请输入密码" v-model="editForm.Password" show-password></el-input>
   </el-form-item>
-    <el-form-item label="房间号" prop="Houseid">
+    <el-form-item label="房间ID" prop="Houseid">
     <el-input placeholder="请输入房产号" v-model="editForm.Houseid" type="number"></el-input>
   </el-form-item>
     <el-form-item label="联系电话" prop="Telephone">
     <el-input placeholder="请输入联系电话" v-model="editForm.Telephone" type="number"></el-input>
   </el-form-item>
   <el-form-item>
-    <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
-    <el-button @click="resetForm('ruleForm')">重置</el-button>
+    <el-button type="primary" @click="submitForm('editForm')">保存</el-button>
+    <el-button @click="resetForm('editForm')">重置</el-button>
   </el-form-item>
     </el-form>
 
@@ -196,23 +199,50 @@ export default {
                     console.log(response);
                 })
       },
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.editForm.Houseid = Number(this.editForm.Houseid)
+             service.put('/api/managerauth/owner/'+this.editForm.ID,this.editForm).then((response)=>{
+                     console.log(response.data);
+                     if(response.data.code==1)
+                     {
+                        this.$message('修改成功!');
+                     }else{
+                          this.$message('修改失败!'+response.data.result);
+                     }
+                }).catch((response)=>{
+                    console.log(response);
+                })
+          } else {
+              this.$message('提交错误!');
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
     },
     created(){
-                   this.getData()
+    this.getData()
     },
 
     data() {
       return {
         dialogVisible2:false,
         editForm:{
-        Username: '',
+          Username: '',
           Password: '',
+          Nickname: '',
           Houseid:new Number,
           Telephone: '',
         },
         rules: {
           Username: [
             { required: true, message: '请输入用户名', trigger: 'blur' },
+            { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
+          ],
+          Nickname: [
+            { required: true, message: '请输入昵称', trigger: 'blur' },
             { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
           ],
           Password: [

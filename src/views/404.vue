@@ -14,16 +14,27 @@
         </div>
         <div class="bullshit__headline">{{ message }}</div>
         <div class="bullshit__info">Please check that the URL you entered is correct, or click the button below to return to the homepage.</div>
-        <a href="" class="bullshit__return-home">Back to home</a>
+        <el-button @click="gologin" >重新登录</el-button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-
+import Cookies from 'js-cookie'
 export default {
   name: 'Page404',
+  methods:{
+    gologin(){
+      Cookies.remove('token')
+      Cookies.remove('role')
+      Cookies.remove('username')
+      Cookies.remove('ID')
+      localStorage.clear()
+     // this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+     this.$router.push(`/login`)
+    }
+  },
   computed: {
     message() {
       return 'The webmaster said that you can not enter this page...'

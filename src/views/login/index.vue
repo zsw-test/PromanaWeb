@@ -138,6 +138,9 @@ export default {
                            this.$message('登陆成功!');
                         //  this.$router.push({ path: this.redirect || '/' })
                           this.$router.push({ path: '/' })
+                          this.$router.replace({
+                            path:'/black',
+                          })
                      }else{
                           this.$message('登陆失败!'+response.data.result);
                      }

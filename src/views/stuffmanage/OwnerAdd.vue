@@ -5,6 +5,9 @@
   <el-form-item label="用户名" prop="Username">
     <el-input placeholder="请输入用户名" v-model="ruleForm.Username" style="%80"></el-input>
   </el-form-item>
+    <el-form-item label="昵称" prop="Nickname">
+    <el-input placeholder="请输入昵称" v-model="ruleForm.Nickname" style="%80"></el-input>
+  </el-form-item>
     <el-form-item label="密码" prop="Password">
     <el-input placeholder="请输入密码" v-model="ruleForm.Password" show-password></el-input>
   </el-form-item>
@@ -32,8 +35,13 @@ import service from "@/utils/request"
           Password: '',
           Houseid:null,
           Telephone: '',
+          Nickname:'',
         },
         rules: {
+          Nickname: [
+            { required: true, message: '请输入昵称', trigger: 'blur' },
+            { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
+          ],
           Username: [
             { required: true, message: '请输入用户名', trigger: 'blur' },
             { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }

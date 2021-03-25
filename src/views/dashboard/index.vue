@@ -7,6 +7,7 @@
 
 <script>
 import Cookies from 'js-cookie'
+import service from '@/utils/request'
 
 export default {
   
@@ -15,7 +16,16 @@ export default {
       role:Cookies.get("role"),
       name: Cookies.get("username"),
     }
-  }
+  },
+  created(){
+    if(Cookies.get("role")=="owner"){
+      service.get("/api/ownerauth/owner/"+Cookies.get("ID"))
+    }else if(Cookies.get("role")=="manager"){
+      service.get("/api/managerauth/manager/"+Cookies.get("ID"))
+    }else{
+      this.$router.push("/404")
+    }
+  },
 }
 </script>
 
