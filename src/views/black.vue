@@ -5,9 +5,16 @@
 <script>
 export default {
     data(){
-        this.$router.replace({
-            path:'/',
-        })
+        if(localStorage.getItem("role")=="owner"){
+            this.$router.replace({
+            path:'/homeO',
+            })
+        }else{
+            this.$router.replace({
+            path:'/homeM',
+            })
+        }
+        
         return {
 
         }

@@ -50,13 +50,49 @@
     </el-table-column>
     <el-table-column
       label="操作"
-      width="200">
+      width="250">
       <template slot-scope="scope">
-        <el-button @click="editRow(scope.row),dialogVisible2 = true" type="primary" size="medium">编辑</el-button>
-        <el-button @click="setremoveRowID(scope.row),dialogVisible = true" type="danger" size="medium">删除</el-button>
+        <el-button @click="showRow(scope.row),dialogVisible3 = true" type="text" size="small">查看成员</el-button>
+        <el-button @click="editRow(scope.row),dialogVisible2 = true" type="primary" size="small">编辑</el-button>
+       
+        <el-button @click="setremoveRowID(scope.row),dialogVisible = true" type="danger" size="small">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
+  <!-- 查看提示框 -->
+  <el-dialog
+        title="查看"
+        :visible.sync="dialogVisible3"
+        width="50%" >
+          <el-table
+              :data="showData"
+                element-loading-text="Loading"
+                border
+                fit
+                highlight-current-row>
+              <el-table-column
+                prop="Name"
+                label="姓名"
+                width="120">
+              </el-table-column>
+              <el-table-column
+                prop="Sex"
+                label="性别"
+                width="120">
+              </el-table-column>
+              <el-table-column
+                prop="IdCard"
+                label="身份证号"
+                width="120">
+              </el-table-column>
+               <el-table-column
+                prop="Work"
+                label="工作"
+                width="120">
+              </el-table-column>
+          </el-table>
+          <el-button type="primary" @click="dialogVisible3 = false" >确 定</el-button>
+      </el-dialog>
     <!-- 删除提醒 -->
     <el-dialog
         title="提示"
@@ -113,6 +149,15 @@ import service from "@/utils/request"
 /* eslint-disable */ 
 export default {
    methods: {
+     showRow(row){
+       service.get('/api/managerauth/residenthousepage/'+row.ID+"?pageindex=0&pagesize=100").then((response)=>{
+          console.log(response);
+          this.showData = response.data.data
+        }).catch((response)=>{
+            console.log(response);
+        })
+
+     },
      saveForm(formName){
        this.$refs[formName].validate((valid) => {
           if (valid) {
@@ -188,6 +233,7 @@ export default {
 
     data() {
       return {
+        showData:[],
         dialogVisible2:false,
         ruleForm: {
           ID:null,
@@ -210,6 +256,7 @@ export default {
         removeID:null,
         editID:null,
          dialogVisible: false,
+         dialogVisible3: false,
         total:200,
         tableData:[],
         pageindex:1,

@@ -48,14 +48,28 @@ export const constantRoutes = [
   },
 
   {
-    path: '/',
+    path: '/homeO',
     component: Layout,
-    redirect: '/dashboard',
+    hidden: Cookies.get('role')!='owner',
+    redirect: '/homeO/dashboardO',
     children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      path: 'dashboardO',
+      name: 'dashboardO',
+      component: () => import('@/views/dashboard/dashboardO'),
+      meta: { title: '业主主页', icon: 'dashboard' }
+    }]
+  },
+
+  {
+    path: '/homeM',
+    hidden: Cookies.get('role')!='manager',
+    component: Layout,
+    redirect: '/homeM/dashboardM',
+    children: [{
+      path: 'dashboardM',
+      name: 'dashboardM',
+      component: () => import('@/views/dashboard/dashboardM'),
+      meta: { title: '管理员主页', icon: 'dashboard' }
     }]
   },
 
@@ -94,31 +108,31 @@ export const constantRoutes = [
     redirect: '/StuffManage/ManagerAll',
     hidden: Cookies.get('role')!='manager',
     name: 'StuffManage',
-    meta: { title: 'StuffManage', icon: 'el-icon-s-help' ,roles:['manager']},
+    meta: { title: '人员管理', icon: 'el-icon-s-help' ,roles:['manager']},
     children: [
       {
         path: 'ManagerAll',
         name: 'ManagerAll',
         component: () => import('@/views/stuffmanage/ManagerAll'),
-        meta: { title: 'ManagerAll', icon: 'table',roles:['manager']},
+        meta: { title: '所有管理员', icon: 'table',roles:['manager']},
       },
       {
         path: 'ManagerAdd',
         name: 'ManagerAdd',
         component: () => import('@/views/stuffmanage/ManagerAdd'),
-        meta: { title: 'ManagerAdd', icon: 'tree' ,roles:['manager']},
+        meta: { title: '添加管理员', icon: 'tree' ,roles:['manager']},
       },
       {
         path: 'OwnerAll',
         name: 'OwnerAll',
         component: () => import('@/views/stuffmanage/OwnerAll'),
-        meta: { title: 'OwnerAll', icon: 'tree' ,roles:['manager']},
+        meta: { title: '所有业主', icon: 'tree' ,roles:['manager']},
       },
       {
         path: 'OwnerAdd',
         name: 'OwnerAdd',
         component: () => import('@/views/stuffmanage/OwnerAdd'),
-        meta: { title: 'OwnerAdd', icon: 'tree' ,roles:['manager']},
+        meta: { title: '添加业主', icon: 'tree' ,roles:['manager']},
       },
     ]
   },
@@ -128,19 +142,19 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/Charge/ChargeAll',
     name: 'Charge',
-    meta: { title: 'Charge', icon: 'el-icon-s-help' },
+    meta: { title: '收费管理', icon: 'el-icon-s-help' },
     children: [
       {
         path: 'ChargeAll',
         name: 'ChargeAll',
         component: () => import('@/views/charge/ChargeAll'),
-        meta: { title: 'ChargeAll', icon: 'table' }
+        meta: { title: '所有费用', icon: 'table' }
       },
       {
         path: 'ChargeRecordAll',
         name: 'ChargeRecordAll',
         component: () => import('@/views/charge/ChargeRecordAll'),
-        meta: { title: 'ChargeRecordAll', icon: 'tree' }
+        meta: { title: '缴费记录', icon: 'tree' }
       }
     ]
   },
@@ -150,53 +164,76 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/HouseM/HouseAll',
     name: 'HouseM',
-    meta: { title: 'HouseM', icon: 'el-icon-s-help' },
+    meta: { title: '房屋管理', icon: 'el-icon-s-help' },
     children: [
       {
         path: 'HouseAll',
         name: 'HouseAll',
         component: () => import('@/views/housem/HouseAll'),
-        meta: { title: 'HouseAll', icon: 'table' }
+        meta: { title: '所有房屋', icon: 'table' }
       },
       {
         path: 'ResidentAll',
         name: 'ResidentAll',
         component: () => import('@/views/housem/ResidentAll'),
-        meta: { title: 'ResidentAll', icon: 'table' }
+        meta: { title: '所有住户', icon: 'table' }
       },
     ]
   },
+  {
+    path: '/HouseO',
+    hidden: Cookies.get('role')!='owner',
+    component: Layout,
+    redirect: '/HouseO/HouseResidents',
+    name: 'HouseO',
+    meta: { title: '我的房屋', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'HouseResidents',
+        name: 'HouseResidents',
+        component: () => import('@/views/houseo/HouseResidents'),
+        meta: { title: '房屋住户', icon: 'table' }
+      },
+      {
+        path: 'HouseFee',
+        name: 'HouseFee',
+        component: () => import('@/views/houseo/HouseFee'),
+        meta: { title: '房屋费用', icon: 'table' }
+      },
+    ]
+  },
+
   {
     path: '/ParkO',
     hidden: Cookies.get('role')!='owner',
     component: Layout,
     redirect: '/ParkO/CarinfoGet',
     name: 'ParkO',
-    meta: { title: 'ParkO', icon: 'el-icon-s-help' },
+    meta: { title: '停车管理', icon: 'el-icon-s-help' },
     children: [
       {
         path: 'CarinfoGet',
         name: 'CarinfoGet',
         component: () => import('@/views/parko/CarinfoGet'),
-        meta: { title: 'CarinfoGet', icon: 'table' }
+        meta: { title: '查询车辆信息', icon: 'table' }
       },
       {
         path: 'CarinfoBuy',
         name: 'CarinfoBuy',
         component: () => import('@/views/parko/CarinfoBuy'),
-        meta: { title: 'CarinfoBuy', icon: 'tree' }
+        meta: { title: '购买停车卡', icon: 'tree' }
       },
       {
         path: 'Parkinfo',
         name: 'Parkinfo',
         component: () => import('@/views/parko/Parkinfo'),
-        meta: { title: 'Parkinfo', icon: 'tree' }
+        meta: { title: '模拟停车', icon: 'tree' }
       },
       {
         path: 'ParkBuy',
         name: 'ParkBuy',
         component: () => import('@/views/parko/ParkBuy'),
-        meta: { title: 'ParkBuy', icon: 'tree' }
+        meta: { title: '购买停车位', icon: 'tree' }
       },
     ]
   },
@@ -206,31 +243,31 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/ParkM/CarinfoAll',
     name: 'ParkM',
-    meta: { title: 'ParkM', icon: 'el-icon-s-help' },
+    meta: { title: '停车管理', icon: 'el-icon-s-help' },
     children: [
       {
         path: 'CarinfoAll',
         name: 'CarinfoAll',
         component: () => import('@/views/parkm/CarinfoAll'),
-        meta: { title: 'CarinfoAll', icon: 'table' }
+        meta: { title: '所有车辆信息', icon: 'table' }
       },
       {
         path: 'ParkinfoAll',
         name: 'ParkinfoAll',
         component: () => import('@/views/parkm/ParkinfoAll'),
-        meta: { title: 'ParkinfoAll', icon: 'tree' }
+        meta: { title: '所有停车信息', icon: 'tree' }
       },
       {
         path: 'ParkAll',
         name: 'ParkAll',
         component: () => import('@/views/parkm/ParkAll'),
-        meta: { title: 'ParkAll', icon: 'tree' }
+        meta: { title: '所有车位信息', icon: 'tree' }
       },
       {
         path: 'ParkAdd',
         name: 'ParkAdd',
         component: () => import('@/views/parkm/ParkAdd'),
-        meta: { title: 'ParkAdd', icon: 'tree' }
+        meta: { title: '添加停车位', icon: 'tree' }
       },
     ]
   },
@@ -256,19 +293,19 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/RepairM/RepairAll',
     name: 'RepairM',
-    meta: { title: 'RepairM', icon: 'el-icon-s-help' },
+    meta: { title: '投诉管理', icon: 'el-icon-s-help' },
     children: [
       {
         path: 'RepairAll',
         name: 'RepairAll',
         component: () => import('@/views/repairm/RepairAll'),
-        meta: { title: 'RepairAll', icon: 'table' }
+        meta: { title: '所有报修', icon: 'table' }
       },
       {
         path: 'RepairGetM',
         name: 'RepairGetM',
         component: () => import('@/views/repairm/RepairGet'),
-        meta: { title: 'RepairGetM', icon: 'table' }
+        meta: { title: '待处理的报修', icon: 'table' }
       },
     ]
   },
@@ -278,26 +315,26 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/RepairO/RepairAdd',
     name: 'RepairO',
-    meta: { title: 'RepairO', icon: 'el-icon-s-help' },
+    meta: { title: '报修管理', icon: 'el-icon-s-help' },
     children: [
       {
         path: 'RepairAdd',
         name: 'RepairAdd',
         component: () => import('@/views/repairo/RepairAdd'),
-        meta: { title: 'RepairAdd', icon: 'table' }
+        meta: { title: '上报报修', icon: 'table' }
       },
       {
         path: 'RepairGetO',
         name: 'RepairGetO',
         component: () => import('@/views/repairo/RepairGet'),
-        meta: { title: 'RepairGetO', icon: 'table' }
+        meta: { title: '我的报修', icon: 'table' }
       },
       {
         path: 'RepairEdit',
         name: 'RepairEdit',
         hidden:true,
         component: () => import('@/views/repairo/RepairEdit'),
-        meta: { title: 'RepairEdit', icon: 'table' }
+        meta: { title: '修改报修', icon: 'table' }
       },
     ]
   },
@@ -307,19 +344,19 @@ export const constantRoutes = [
     hidden: Cookies.get('role')!='manager',
     redirect: '/Expressage/ExpressageAll',
     name: 'Expressage',
-    meta: { title: 'Expressage', icon: 'el-icon-s-help' },
+    meta: { title: '快件管理', icon: 'el-icon-s-help' },
     children: [
       {
         path: 'ExpressageAll',
         name: 'ExpressageAll',
         component: () => import('@/views/expressage/ExpressageAll'),
-        meta: { title: 'ExpressageAll', icon: 'table' }
+        meta: { title: '所有快件', icon: 'table' }
       },
       {
         path: 'ExpressageCreate',
         name: 'ExpressageCreate',
         component: () => import('@/views/expressage/ExpressageCreate'),
-        meta: { title: 'ExpressageCreate', icon: 'table' }
+        meta: { title: '快件录入', icon: 'table' }
       },
     ]
   },

@@ -137,10 +137,16 @@ export default {
                         Cookies.set('ID',response.data.data.id)
                            this.$message('登陆成功!');
                         //  this.$router.push({ path: this.redirect || '/' })
-                          this.$router.push({ path: '/' })
-                          this.$router.replace({
+                        if(this.loginForm.Radio=="owner"){
+                          localStorage.setItem('Houseid',response.data.data.houseid)
+                          this.$router.push({ path: '/homeO' })
+                        }else{
+                          this.$router.push({ path: '/homeM' })
+                        }
+                        this.$router.replace({
                             path:'/black',
-                          })
+                        })
+                          
                      }else{
                           this.$message('登陆失败!'+response.data.result);
                      }

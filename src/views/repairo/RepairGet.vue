@@ -38,13 +38,6 @@
       :formatter="formatBoolean"
       width="120">
     </el-table-column>
-<el-table-column
-      prop="Pics"
-      label="图片"
-      width="120">
-
-</el-table-column>
-  
     <el-table-column
       label="操作"
       width="220">
@@ -63,7 +56,9 @@
    <el-card>保修人：{{this.ShowData.Ownername}}</el-card><br>
  <el-card>报修时间：{{this.ShowData.CreatedAt}}</el-card><br>
  <el-card>报修地点：{{this.ShowData.Address}}</el-card><br>
-  <el-card>报修照片：
+  <el-card>状态：{{this.ShowData.Status}}</el-card><br>
+  <el-card>处理人员：{{this.ShowData.Managername}}</el-card><br>
+  <el-card>照片：
   <div class="demo-image__lazy">
   <el-image v-for="url in this.ShowData.ShowList" :key="url" :src="url" lazy></el-image>
 </div>
@@ -108,6 +103,8 @@ export default {
           this.ShowData.Ownername = row.Ownername
           this.ShowData.Address = row.Address
           this.ShowData.CreatedAt = row.CreatedAt
+          this.ShowData.Managername = row.Managername
+          this.ShowData.Status = row.Status
         },
          getData(){
                 service.get('/api/ownerauth/repairowner?Ownername='+this.Ownername,).then((response)=>{
@@ -137,6 +134,8 @@ export default {
                   Ownername:null,
                   Address:null,
                   CreatedAt:null,
+                  Status:null,
+                  Managername:null,
                 },
                 dialogVisible:false,
                 tableData:[],

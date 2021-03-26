@@ -1,7 +1,6 @@
 <template>
   <div class="dashboard-container">
     <div class="dashboard-text">welcome {{role}}: {{ name }}</div>
-    
   </div>
 </template>
 
@@ -15,14 +14,14 @@ export default {
     return{
       role:Cookies.get("role"),
       name: Cookies.get("username"),
+      parkdata:null,
     }
   },
   created(){
     if(Cookies.get("role")=="owner"){
       service.get("/api/ownerauth/owner/"+Cookies.get("ID"))
-    }else if(Cookies.get("role")=="manager"){
-      service.get("/api/managerauth/manager/"+Cookies.get("ID"))
     }else{
+      console.log("123123")
       this.$router.push("/404")
     }
   },

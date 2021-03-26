@@ -3,9 +3,6 @@
 
 
 <el-form :model="form" :rules="rules" ref="form" label-width="100px" class="demo-Form">
-  <el-form-item label="业主Id"  prop="Ownerid">
-    <el-input v-model="form.Ownerid"></el-input>
-  </el-form-item>
 <el-form-item label="绑定车辆" prop="Carnumber">
   <el-input v-model="form.Carnumber"></el-input>
   </el-form-item>
@@ -36,12 +33,8 @@ import service from "@/utils/request"
           Ownerid: null,
           Carnumber: '',
           ParkId:null,
-
         },
          rules: {
-          Ownerid: [
-            { required: true, message: '请输入业主ID', trigger: 'blur' },
-          ],
           Carnumber: [
             { required: true, message: '请输入绑定车辆', trigger: 'blur' },
           ],
@@ -63,7 +56,7 @@ import service from "@/utils/request"
          submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.form.Ownerid = Number(this.form.Ownerid)
+            this.form.Ownerid = new Number(localStorage.getItem("ID")) 
             service.post('/api/ownerauth/parkbuy',this.form).then((response)=>{
               if(response.data.code==1)
               {
