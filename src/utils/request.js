@@ -50,7 +50,7 @@ service.interceptors.response.use(
     
     if(res.data.code===401){
       Message("没有权限 ~请重新登陆！")
-      router.push('/404')
+      router.push('/login')
     }else if (res.data.code===402){
       Message("登陆超时 ~请重新登陆！")
       router.push('/login')

@@ -19,17 +19,19 @@ export default {
     }
   },
   created(){
+    if(Cookies.get("role")=="manager"){
+      service.get("/api/managerauth/manager/"+Cookies.get("ID"))
+    }else{
+      this.$message("请重新登陆")
+      this.$router.push("/login")
+    }
     service.get("/api/managerauth/parkallcount").then((response)=>{
                 this.parkdata = response.data.data
                      console.log(response.data.data);
                 }).catch((response)=>{
                     console.log(response);
                 })
-   if(Cookies.get("role")=="manager"){
-      service.get("/api/managerauth/manager/"+Cookies.get("ID"))
-    }else{
-      this.$router.push("/404")
-    }
+
   },
 }
 </script>

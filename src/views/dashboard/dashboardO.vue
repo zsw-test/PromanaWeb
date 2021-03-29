@@ -21,8 +21,8 @@ export default {
     if(Cookies.get("role")=="owner"){
       service.get("/api/ownerauth/owner/"+Cookies.get("ID"))
     }else{
-      console.log("123123")
-      this.$router.push("/404")
+      this.$message("请重新登陆")
+      this.$router.push("/login")
     }
   },
 }
