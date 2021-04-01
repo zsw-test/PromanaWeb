@@ -46,6 +46,11 @@ export const constantRoutes = [
     component: () => import('@/views/404'),
     hidden: true
   },
+  {
+    path: '/',
+    component: () => import('@/views/login/index'),
+    hidden: true
+  },
 
   {
     path: '/homeO',
@@ -199,6 +204,12 @@ export const constantRoutes = [
         name: 'HouseFee',
         component: () => import('@/views/houseo/HouseFee'),
         meta: { title: '房屋费用', icon: 'table' }
+      },
+      {
+        path: 'HouseAddResident',
+        name: 'HouseAddResident',
+        component: () => import('@/views/houseo/HouseAddResident'),
+        meta: { title: '添加住户', icon: 'table' }
       },
     ]
   },

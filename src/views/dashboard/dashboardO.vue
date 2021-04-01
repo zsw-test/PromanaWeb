@@ -7,7 +7,7 @@
 <script>
 import Cookies from 'js-cookie'
 import service from '@/utils/request'
-
+import {detect} from '@/utils/baidu_face_api'
 export default {
   
   data(){
@@ -18,6 +18,8 @@ export default {
     }
   },
   created(){
+    detect()
+    
     if(Cookies.get("role")=="owner"){
       service.get("/api/ownerauth/owner/"+Cookies.get("ID"))
     }else{

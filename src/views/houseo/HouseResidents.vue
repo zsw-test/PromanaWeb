@@ -7,46 +7,34 @@
       border
       fit
       highlight-current-row>
-    <el-table-column
-      prop="ID"
-      label="Id"
-      width="120">
-    </el-table-column>
-    <el-table-column
-      prop="Houseid"
-      label="Houseid"
-      width="120">
-    </el-table-column>
-    <el-table-column
-      prop="Water"
-      label="水量"
-      width="120">
-    </el-table-column>
-    <el-table-column
-      prop="Electric"
-      label="电量"
-      width="120">
-    </el-table-column>
-    <el-table-column
-      prop="Gas"
-      label="燃气量"
-      width="120">
-    </el-table-column>
-        <el-table-column
-      prop="Property"
-      label="物业费"
-      width="120">
-    </el-table-column>
+                 <el-table-column
+                prop="Name"
+                label="姓名"
+                width="120">
+              </el-table-column>
+              <el-table-column
+                prop="Sex"
+                label="性别"
+                width="120">
+              </el-table-column>
+              <el-table-column
+                prop="IdCard"
+                label="身份证号"
+                width="120">
+              </el-table-column>
+               <el-table-column
+                prop="Work"
+                label="工作"
+                width="120">
+              </el-table-column>
     <el-table-column
       label="操作"
-      width="200">
+      width="150">
       <template slot-scope="scope">
-        <el-button @click="queryCharge(scope.row)" type="primary" size="medium">查看</el-button>
-        <el-button  type="danger" size="medium">删除</el-button>
+        <el-button @click="DeleteResident(scope.row)" type="danger" size="small">删除住户</el-button>
       </template>
     </el-table-column>
   </el-table>
-
 
 <el-pagination
   background
@@ -66,8 +54,15 @@
 import service from "@/utils/request"
 export default {
     methods:{
-        queryCharge(row){
-            console.log(row)
+      
+        DeleteResident(row){
+            service.delete('/api/ownerauth/resident/'+row.ID).then((response)=>{
+                        console.log(response.data);
+                         this.$message(response.data.result)
+                         this.getData()
+                }).catch((response)=>{
+                    console.log(response);
+                })
         },
               page(currentpage){
                   this.getData()
@@ -90,6 +85,7 @@ export default {
 
         data(){
             return {
+              
                 total:200,
                 tableData:[],
                 pageindex:1,
