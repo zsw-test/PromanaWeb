@@ -20,7 +20,7 @@
               <el-table-column
                 prop="IdCard"
                 label="身份证号"
-                width="120">
+                width="220">
               </el-table-column>
                <el-table-column
                 prop="Work"

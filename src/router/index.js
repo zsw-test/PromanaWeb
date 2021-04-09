@@ -108,6 +108,29 @@ export const constantRoutes = [
   },
 
   {
+    path: '/EntraceGuard',
+    component: Layout,
+    redirect: '/EntraceGuard/index',
+    hidden: Cookies.get('role')!='owner',
+    name: 'EntraceGuard',
+    meta: { title: '门禁系统', icon: 'el-icon-s-help' ,roles:['owner']},
+    children: [
+      {
+        path: 'index',
+        name: 'index',
+        component: () => import('@/views/entraceguard/index'),
+        meta: { title: '上传图片', icon: 'table',roles:['owner']},
+      },
+      {
+        path: 'confirm',
+        name: 'confirm',
+        component: () => import('@/views/entraceguard/confirm'),
+        meta: { title: '门禁确认', icon: 'table',roles:['owner']},
+      },
+    ]
+  },
+
+  {
     path: '/StuffManage',
     component: Layout,
     redirect: '/StuffManage/ManagerAll',

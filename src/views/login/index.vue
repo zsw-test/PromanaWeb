@@ -135,7 +135,7 @@ export default {
                         Cookies.set('username',this.loginForm.Username)
                         Cookies.set('role',this.loginForm.Radio)
                         Cookies.set('ID',response.data.data.id)
-                           this.$message('登陆成功!');
+                        this.$message('登陆成功!');
                         //  this.$router.push({ path: this.redirect || '/' })
                         if(this.loginForm.Radio=="owner"){
                           localStorage.setItem('Houseid',response.data.data.houseid)

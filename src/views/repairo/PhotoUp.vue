@@ -26,7 +26,7 @@
     },
     methods: {
         handleSuccess(response, file, fileList){
-            if(response.data.code==1){
+            if(response.code==1){
                 this.fileList.push({
                     name:response.data.data,
                     url:"http://qqdixuhr8.hd-bkt.clouddn.com/"+file.name,
