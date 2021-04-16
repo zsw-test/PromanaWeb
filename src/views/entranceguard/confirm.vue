@@ -41,8 +41,18 @@ import service from '@/utils/request';
                 }).then((response)=>{
                     if(response.data.code==1)
                     {
-                        var err=JSON.parse(response.data.data)
-                        this.$message(err.error_msg)
+                        var data=JSON.parse(response.data.data)
+                        console.log(data)
+                        if(data.error_msg=="SUCCESS"){
+                          if(data.result.user_list[0].score>=80){
+                            this.$message("识别成功！请进入")
+                          }else{
+                            this.$message("识别失败！相似度低于%80")
+                          }
+                        }else{
+                          this.$message("人脸识别请求失败")
+                        }
+                        //this.$message("score:"+String(data.result.user_list[0].score))
                     }
                      console.log(response.data.data);
                      
