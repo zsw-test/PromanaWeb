@@ -1,5 +1,9 @@
 <template>
     <div>
+      <el-card>
+    <div slot="header" class="clearfix">
+        <span>上传照片</span>
+    </div>
     <el-upload
     action="http://127.0.0.1:31717/api/qiniuup"
     list-type="picture-card"
@@ -12,6 +16,7 @@
     <el-dialog :visible.sync="dialogVisible">
     <img width="100%" :src="dialogImageUrl" alt="">
     </el-dialog>
+      </el-card>
     </div>
 </template>
 

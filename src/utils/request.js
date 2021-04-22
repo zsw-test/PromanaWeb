@@ -49,7 +49,7 @@ service.interceptors.response.use(
     const res = response
     
     if(res.data.code===401){
-      Message("没有权限 ~请重新登陆！")
+      Message("长时间未操作，请重新登录！")
       router.push('/login')
     }else if (res.data.code===402){
       Message("登陆超时 ~请重新登陆！")

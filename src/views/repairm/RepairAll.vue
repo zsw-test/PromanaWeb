@@ -1,6 +1,9 @@
 <template>
   <div class="app-container">
-
+<el-card>
+    <div slot="header" class="clearfix">
+        <span>所有报修</span>
+    </div>
   <el-table
     :data="tableData"
       element-loading-text="Loading"
@@ -58,7 +61,7 @@
       </template>
     </el-table-column>
   </el-table>
-
+</el-card>
 <el-dialog
   title="派人维修"
   :visible.sync="dialogVisible"

@@ -1,5 +1,9 @@
 <template>
     <div class="app-container">
+      <el-card>
+    <div slot="header" class="clearfix">
+        <span>识别人脸门禁</span>
+    </div>
         <el-upload
         class="upload-demo"
         drag
@@ -13,6 +17,7 @@
         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
         <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
         </el-upload>
+      </el-card>
     </div>
 </template>
 

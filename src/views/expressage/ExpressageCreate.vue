@@ -1,7 +1,10 @@
 <template>
   <div class="app-container">
 
-
+<el-card>
+    <div slot="header" class="clearfix">
+        <span>录入快件</span>
+    </div>
 <el-form :model="Form" :rules="rules" ref="Form" label-width="100px" class="demo-Form">
   <el-form-item label="收件人" prop="Ownername">
     <el-input placeholder="请输入收件人" v-model="Form.Ownername" style="%80"></el-input>
@@ -20,7 +23,7 @@
     <el-button @click="resetForm('Form')">重置</el-button>
   </el-form-item>
 </el-form>
-
+</el-card>
  </div>
 </template>
 <script>

@@ -1,6 +1,9 @@
 <template>
   <div class="app-container">
-
+<el-card>
+    <div slot="header" class="clearfix">
+        <span>上报报修</span>
+    </div>
 
 <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
   <el-form-item label="地址" prop="Address">
@@ -29,7 +32,7 @@
     <el-button @click="resetForm('ruleForm')">重置</el-button>
   </el-form-item>
 </el-form>
-
+</el-card>
  </div>
 </template>
 <script>

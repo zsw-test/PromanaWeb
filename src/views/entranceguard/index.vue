@@ -1,5 +1,9 @@
 <template>
     <div class="app-container">
+      <el-card>
+    <div slot="header" class="clearfix">
+        <span>上传人脸图片</span>
+    </div>
         <el-upload
         class="upload-demo"
         action="http://127.0.0.1:31717/api/qiniuup"
@@ -13,6 +17,7 @@
         <el-button size="small" type="primary">点击上传</el-button>
         <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
         </el-upload>
+      </el-card>
     </div>
 </template>
 

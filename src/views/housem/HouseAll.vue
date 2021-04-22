@@ -1,7 +1,10 @@
 
 <template>
   <div class="app-container">
-
+<el-card>
+    <div slot="header" class="clearfix">
+        <span>房屋列表</span>
+    </div>
   <el-table
     :data="tableData"
       element-loading-text="Loading"
@@ -59,6 +62,7 @@
       </template>
     </el-table-column>
   </el-table>
+</el-card>
   <!-- 查看提示框 -->
   <el-dialog
         title="查看"

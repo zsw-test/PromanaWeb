@@ -1,7 +1,10 @@
 <template>
   <div class="app-container">
 
-
+<el-card>
+    <div slot="header" class="clearfix">
+        <span>添加车位</span>
+    </div>
 <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
   <el-form-item label="业主ID" prop="Ownerid">
     <el-input placeholder="请输入业主ID" v-model="ruleForm.Ownerid" style="%80" type="number"></el-input>
@@ -17,7 +20,7 @@
     <el-button @click="resetForm('ruleForm')">重置</el-button>
   </el-form-item>
 </el-form>
-
+</el-card>
  </div>
 </template>
 <script>

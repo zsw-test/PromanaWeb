@@ -1,6 +1,9 @@
 <template>
   <div class="app-container">
-
+<el-card>
+    <div slot="header" class="clearfix">
+        <span>所有快件</span>
+    </div>
   <el-table
     :data="tableData"
       element-loading-text="Loading"
@@ -52,7 +55,7 @@
     </el-table-column>
   </el-table>
 
-
+</el-card>
 <el-pagination
   background
   layout="prev, pager, next"

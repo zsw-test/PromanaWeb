@@ -1,7 +1,10 @@
 
 <template>
   <div class="app-container">
-
+<el-card>
+    <div slot="header" class="clearfix">
+        <span>住户列表</span>
+    </div>
   <el-table
     :data="tableData"
       element-loading-text="Loading"
@@ -52,6 +55,7 @@
       </template>
     </el-table-column>
   </el-table>
+</el-card>
     <!-- 删除提醒 -->
     <el-dialog
         title="提示"
