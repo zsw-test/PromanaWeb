@@ -1,7 +1,10 @@
 <template>
   <div class="app-container">
 
- 
+ <el-card>
+    <div slot="header" class="clearfix">
+        <span>模拟停车</span>
+    </div>
 <el-form :model="Form" :rules="rules" ref="Form" label-width="100px" class="demo-Form">
   <el-form-item label="车牌号" prop="carnumber">
     <el-input placeholder="车牌号" v-model="Form.carnumber" style="%80"></el-input>
@@ -12,7 +15,7 @@
     <el-button type="primary" @click="ParkInfoDelete('Form')">出库</el-button>
   </el-form-item>
 </el-form>
-
+ </el-card>
 
 
 <!-- 显示停车信息的页面 -->

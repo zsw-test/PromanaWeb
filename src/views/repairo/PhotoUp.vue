@@ -34,7 +34,7 @@
             if(response.code==1){
                 this.fileList.push({
                     name:response.data.data,
-                    url:"http://qqdixuhr8.hd-bkt.clouddn.com/"+file.name,
+                    url:"http://qs619ami6.hd-bkt.clouddn.com/"+file.name,
                 })
                 
             }

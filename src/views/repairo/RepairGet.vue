@@ -2,7 +2,7 @@
   <div class="app-container">
 <el-card>
     <div slot="header" class="clearfix">
-        <span>待处理的报修</span>
+        <span>我的报修</span>
     </div>
   <el-table
     :data="tableData"

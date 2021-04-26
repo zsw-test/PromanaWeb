@@ -1,7 +1,10 @@
 <template>
   <div class="app-container">
 
-
+<el-card>
+    <div slot="header" class="clearfix">
+        <span>购买停车位</span>
+    </div>
 <el-form :model="form" :rules="rules" ref="form" label-width="100px" class="demo-Form">
 <el-form-item label="绑定车辆" prop="Carnumber">
   <el-input v-model="form.Carnumber"></el-input>
@@ -15,7 +18,7 @@
     <el-button type="primary" @click="submitForm('form')">购买</el-button>
   </el-form-item>
 </el-form>
-
+</el-card>
 
   </div>
 </template>

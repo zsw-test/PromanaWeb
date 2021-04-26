@@ -96,7 +96,7 @@ import service from "@/utils/request"
             if(response.code==1){
                 this.fileList.push({
                     name:response.data,
-                    url:"http://qqdixuhr8.hd-bkt.clouddn.com/"+file.name,
+                    url:"http://qs619ami6.hd-bkt.clouddn.com/"+file.name,
                 })
                 console.log(this.fileList)
             }

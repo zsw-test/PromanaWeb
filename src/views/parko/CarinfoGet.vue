@@ -1,6 +1,9 @@
 <template>
   <div class="app-container">
-
+<el-card>
+    <div slot="header" class="clearfix">
+        <span>获取车辆信息</span>
+    </div>
 
 <el-form :model="Form" :rules="rules" ref="Form" label-width="100px" class="demo-Form">
   <el-form-item label="车牌号" prop="carnumber">
@@ -10,6 +13,7 @@
     <el-button type="primary" @click="submitForm('Form')">查询</el-button>
   </el-form-item>
 </el-form>
+</el-card>
   </div>
 </template>
 

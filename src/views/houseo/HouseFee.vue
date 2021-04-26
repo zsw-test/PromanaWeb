@@ -2,25 +2,25 @@
   <div class="app-container">
     <el-card style="margin-bottom: 18px;">
     <div>
-        <span> {{'水量(L)： ' + this.Charge.Water }}</span>
+        <span> {{'水量： ' + this.Charge.Water +' (L)'}}</span>
         <el-button @click="dialogWater=true"  style="float: right; padding: 3px 0" type="text">缴费</el-button>
     </div>
     </el-card>
         <el-card style="margin-bottom: 18px;">
     <div>
-        <span> {{'电量(度)： ' + this.Charge.Electric }}</span>
+        <span> {{'电量： ' + this.Charge.Electric +' (度)'}}</span>
         <el-button @click="dialogElectric=true" style="float: right; padding: 3px 0" type="text">缴费</el-button>
     </div>
     </el-card>
         <el-card style="margin-bottom: 18px;">
     <div >
-        <span> {{'燃气量(L)： ' + this.Charge.Gas }}</span>
+        <span> {{'燃气量： ' + this.Charge.Gas +' (L)'}}</span>
         <el-button @click="dialogGas=true" style="float: right; padding: 3px 0" type="text">缴费</el-button>
     </div>
     </el-card>
         <el-card style="margin-bottom: 18px;">
     <div >
-        <span> {{'物业费： ' + this.Charge.Property }}</span>
+        <span> {{'物业费： ' + this.Charge.Property +' (元)' }}</span>
         <el-button @click="dialogProperty=true" style="float: right; padding: 3px 0" type="text">缴费</el-button>
     </div>
     </el-card>
