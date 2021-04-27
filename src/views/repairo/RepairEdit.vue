@@ -137,7 +137,7 @@ import service from "@/utils/request"
                         this.ruleForm.ID = response.data.data.ID
                         if(response.data.data.Pics==""){
                             this.ruleForm.Pics = []
-                        }
+                           }
                         else{
                             this.ruleForm.Pics = JSON.parse(response.data.data.Pics)
                         }

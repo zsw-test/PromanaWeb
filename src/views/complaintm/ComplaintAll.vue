@@ -2,7 +2,7 @@
   <div class="app-container">
 <el-card>
     <div slot="header" class="clearfix">
-        <span>所有报修</span>
+        <span>所有投诉</span>
     </div>
   <el-table
     :data="tableData"
@@ -12,22 +12,22 @@
       highlight-current-row>
     <el-table-column
       prop="ID"
-      label="报修单号"
+      label="投诉单号"
       width="120">
     </el-table-column>
     <el-table-column
-      prop="Address"
-      label="地址"
+      prop="Depart"
+      label="投诉部门"
       width="120">
     </el-table-column>
     <el-table-column
       prop="CreatedAt"
-      label="报修时间"
+      label="投诉时间"
       width="220">
     </el-table-column>
     <el-table-column
       prop="Reason"
-      label="报修原因"
+      label="投诉原因"
       width="300">
     </el-table-column>
       <el-table-column
@@ -80,7 +80,7 @@
     </el-table-column>
     <el-table-column
       prop="Depart"
-      label="部门"
+      label="投诉部门"
       width="100">
     </el-table-column>
     <el-table-column
@@ -107,14 +107,10 @@
   title="详情"
   :visible.sync="dialogVisible2"
   width="50%">
-   <el-card>保修人：{{this.ShowData.Ownername}}</el-card><br>
- <el-card>报修时间：{{this.ShowData.CreatedAt}}</el-card><br>
- <el-card>报修地点：{{this.ShowData.Address}}</el-card><br>
-  <el-card>报修照片：
-  <div class="demo-image__lazy">
-  <el-image v-for="url in this.ShowData.ShowList" :key="url" :src="url" lazy></el-image>
-</div>
-</el-card><br>
+   <el-card>投诉人：{{this.ShowData.Ownername}}</el-card><br>
+ <el-card>投诉时间：{{this.ShowData.CreatedAt}}</el-card><br>
+ <el-card>投诉部门：{{this.ShowData.Depart}}</el-card><br>
+ <el-card>投诉原因：{{this.ShowData.Reason}}</el-card><br>
   <span slot="footer" class="dialog-footer">
     <el-button type="primary" @click="dialogVisible2 = false">确 定</el-button>
   </span>
@@ -140,7 +136,7 @@ import service from "@/utils/request"
 export default {
     methods:{
       deleteRow(row){
-          service.delete('/api/managerauth/repair/'+row.ID).then((response)=>{
+          service.delete('/api/managerauth/complaint/'+row.ID).then((response)=>{
                         console.log(response.data);
                          this.$message(response.data.result)
                          this.getData()
@@ -158,7 +154,7 @@ export default {
                 return ret;
             },
           DispathchRow(row){
-            service.put('api/managerauth/repairdispatch',
+            service.put('api/managerauth/complaintdispatch',
             {
               Managername:row.Username,
               ID:this.DispatchRowId
@@ -189,21 +185,14 @@ export default {
           })
         },
          getData(){
-                  service.get('/api/managerauth/repairtotal').then((response)=>{
+                  service.get('/api/managerauth/complainttotal').then((response)=>{
                         console.log(response.data.data.count);
                     this.total = response.data.data.count
                 }).catch((response)=>{
                     console.log(response);
                 })
-                service.get('/api/managerauth/repairpage?pageindex='+this.pageindex+'&pagesize='+this.pagesize).then((response)=>{
+                service.get('/api/managerauth/complaintpage?pageindex='+this.pageindex+'&pagesize='+this.pagesize).then((response)=>{
                     this.tableData = response.data.data
-                      for(var i=0;i<this.tableData.length;i++){
-                      if(this.tableData[i].Pics==""){
-                        this.tableData[i].Pics=[]
-                        continue;
-                      }
-                      this.tableData[i].Pics=JSON.parse(this.tableData[i].Pics)
-                    }
                      console.log(response.data.data);
                 }).catch((response)=>{
                     console.log(response);
@@ -216,9 +205,9 @@ export default {
                 this.getData2()
             },
             ShowRow(row){
-            this.ShowData.ShowList = row.Pics
+            this.ShowData.Reason = row.Reason
             this.ShowData.Ownername = row.Ownername
-            this.ShowData.Address = row.Address
+            this.ShowData.Depart = row.Depart
             this.ShowData.CreatedAt = row.CreatedAt
             },
         },
@@ -228,9 +217,9 @@ export default {
         data(){
             return {
                 ShowData:{
-                  ShowList:[],
+                  Reason:null,
                   Ownername:null,
-                  Address:null,
+                  Depart:null,
                   CreatedAt:null,
                 },
               dialogVisible: false,

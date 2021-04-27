@@ -306,18 +306,24 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/Complaint',
+    path: '/ComplaintM',
     component: Layout,
     hidden: Cookies.get('role')!='manager',
-    redirect: '/Complaint/ComplaintAll',
-    name: 'Complaint',
-    meta: { title: 'Complaint', icon: 'el-icon-s-help' },
+    redirect: '/ComplaintM/ComplaintAll',
+    name: 'ComplaintM',
+    meta: { title: '投诉管理', icon: 'el-icon-s-help' },
     children: [
       {
         path: 'ComplaintAll',
         name: 'ComplaintAll',
-        component: () => import('@/views/complaint/ComplaintAll'),
-        meta: { title: 'ComplaintAll', icon: 'table' }
+        component: () => import('@/views/complaintm/ComplaintAll'),
+        meta: { title: '所有投诉', icon: 'table' }
+      },
+      {
+        path: 'ComplaintGet',
+        name: 'ComplaintGet',
+        component: () => import('@/views/complaintm/ComplaintGet'),
+        meta: { title: '待处理的投诉', icon: 'table' }
       },
     ]
   },
@@ -327,7 +333,7 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/RepairM/RepairAll',
     name: 'RepairM',
-    meta: { title: '投诉管理', icon: 'el-icon-s-help' },
+    meta: { title: '报修管理', icon: 'el-icon-s-help' },
     children: [
       {
         path: 'RepairAll',
@@ -369,6 +375,51 @@ export const constantRoutes = [
         hidden:true,
         component: () => import('@/views/repairo/RepairEdit'),
         meta: { title: '修改报修', icon: 'table' }
+      },
+    ]
+  },
+  {
+    path: '/ComplaintO',
+    hidden: Cookies.get('role')!='owner',
+    component: Layout,
+    redirect: '/ComplaintO/ComplaintAdd',
+    name: 'ComplaintO',
+    meta: { title: '投诉管理', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'ComplaintAdd',
+        name: 'ComplaintAdd',
+        component: () => import('@/views/complainto/ComplaintAdd'),
+        meta: { title: '投诉', icon: 'table' }
+      },
+      {
+        path: 'ComplaintGetO',
+        name: 'ComplaintGetO',
+        component: () => import('@/views/complainto/ComplaintGet'),
+        meta: { title: '我的投诉', icon: 'table' }
+      },
+      {
+        path: 'ComplaintEdit',
+        name: 'ComplaintEdit',
+        hidden:true,
+        component: () => import('@/views/complainto/ComplaintEdit'),
+        meta: { title: '修改投诉', icon: 'table' }
+      },
+    ]
+  },
+  {
+    path: '/ExpressageO',
+    hidden: Cookies.get('role')!='owner',
+    component: Layout,
+    redirect: '/ExpressageO/ExpressageGet',
+    name: 'ExpressageO',
+    meta: { title: '快件管理', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'ExpressageGet',
+        name: 'ExpressageGet',
+        component: () => import('@/views/expressageo/ExpressageGet'),
+        meta: { title: '我的快件', icon: 'table' }
       },
     ]
   },

@@ -2,7 +2,7 @@
   <div class="app-container">
 <el-card>
     <div slot="header" class="clearfix">
-        <span>我的报修</span>
+        <span>我的快件</span>
     </div>
   <el-table
     :data="tableData"
@@ -12,32 +12,32 @@
       highlight-current-row>
     <el-table-column
       prop="ID"
-      label="报修单号"
+      label="快件单号"
       width="120">
     </el-table-column>
     <el-table-column
-      prop="Address"
-      label="地址"
+      prop="ExpressLocation"
+      label="到达地点"
       width="120">
     </el-table-column>
     <el-table-column
       prop="CreatedAt"
-      label="报修时间"
+      label="快件时间"
       width="220">
     </el-table-column>
     <el-table-column
-      prop="Reason"
-      label="报修原因"
-      width="300">
+      prop="Telephone"
+      label="电话号码"
+      width="200">
     </el-table-column>
     <el-table-column
-      prop="Status"
-      label="状态"
+      prop="ExpType"
+      label="快件类型"
       width="120">
     </el-table-column>
         <el-table-column
-      prop="Resolve"
-      label="解决"
+      prop="Istake"
+      label="是否取出"  
       :formatter="formatBoolean"
       width="120">
     </el-table-column>
@@ -46,8 +46,8 @@
       width="220">
       <template slot-scope="scope">
         <el-button type="text" @click="ShowRow(scope.row),dialogVisible = true" size="medium">查看详情</el-button>
-        <el-button  @click="EditRow(scope.row)" type="primary" size="small">编辑</el-button>
-        <el-button  @click="deleteRow(scope.row)" type="danger" size="small">删除</el-button>
+        <!-- <el-button  @click="EditRow(scope.row)" type="primary" size="small">编辑</el-button> -->
+        <el-button  @click="deleteRow(scope.row)" type="primary" size="small">取出</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -56,16 +56,13 @@
   title="详情"
   :visible.sync="dialogVisible"
   width="50%">
-   <el-card>报修人：{{this.ShowData.Ownername}}</el-card><br>
- <el-card>报修时间：{{this.ShowData.CreatedAt}}</el-card><br>
- <el-card>报修地点：{{this.ShowData.Address}}</el-card><br>
-  <el-card>状态：{{this.ShowData.Status}}</el-card><br>
-  <el-card>处理人员：{{this.ShowData.Managername}}</el-card><br>
-  <el-card>照片：
-  <div class="demo-image__lazy">
-  <el-image v-for="url in this.ShowData.ShowList" :key="url" :src="url" lazy></el-image>
-</div>
-</el-card><br>
+   <el-card>收件人：{{this.ShowData.Ownername}}</el-card><br>
+ <el-card>快件时间：{{this.ShowData.CreatedAt}}</el-card><br>
+ <el-card>到达地点：{{this.ShowData.ExpressLocation}}</el-card><br>
+  <el-card>状态：{{this.ShowData.Istake}}</el-card><br>
+  <el-card>快件类型：{{this.ShowData.ExpType}}</el-card><br>
+ <el-card>电话号码：{{this.ShowData.Telephone}}</el-card><br>
+
   <span slot="footer" class="dialog-footer">
     <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
   </span>
@@ -80,18 +77,16 @@
 import service from "@/utils/request"
 export default {
     methods:{
-        EditRow(row){
-          this.$router.push({name: 'RepairEdit', params: {repairid: row.ID}})
-        },
-        deleteRow(row){
-          service.delete('/api/ownerauth/repair/'+row.ID).then((response)=>{
+      deleteRow(row){
+            service.delete('/api/ownerauth/expressage/'+row.ID).then((response)=>{
                         console.log(response.data);
                          this.$message(response.data.result)
                          this.getData()
                 }).catch((response)=>{
                     console.log(response);
                 })
-        },
+                this.getData()
+          },
           formatBoolean: function (row, column, cellValue) {
                 var ret = ''  //你想在页面展示的值
                 if (cellValue) {
@@ -102,27 +97,17 @@ export default {
                 return ret;
             },
         ShowRow(row){
-           this.ShowData.ShowList = row.Pics
+           this.ShowData.Telephone = row.Telephone
           this.ShowData.Ownername = row.Ownername
-          this.ShowData.Address = row.Address
+          this.ShowData.ExpressLocation = row.ExpressLocation
           this.ShowData.CreatedAt = row.CreatedAt
-          this.ShowData.Managername = row.Managername
-          this.ShowData.Status = row.Status
+          this.ShowData.ExpType = row.ExpType
+          this.ShowData.Istake = row.Istake
         },
          getData(){
-                service.get('/api/ownerauth/repairowner?Ownername='+this.Ownername,).then((response)=>{
+                service.get('/api/ownerauth/expressageowner?Ownername='+this.Ownername,).then((response)=>{
                   
                     this.tableData = response.data.data
-
-
-                      for(var i=0;i<this.tableData.length;i++){
-                      if(this.tableData[i].Pics==""){
-                        this.tableData[i].Pics=[]
-                        continue;
-                      }
-                      
-                      this.tableData[i].Pics=JSON.parse(this.tableData[i].Pics)
-                    }
                      console.log(response.data.data);
                 }).catch((response)=>{
                     console.log(response);
@@ -133,12 +118,12 @@ export default {
         data(){
             return {
                 ShowData:{
-                  ShowList:[],
                   Ownername:null,
-                  Address:null,
+                  ExpressLocation:null,
                   CreatedAt:null,
-                  Status:null,
-                  Managername:null,
+                  Telephone:null,
+                  Istake:null,
+                  ExpType:null,
                 },
                 dialogVisible:false,
                 tableData:[],
