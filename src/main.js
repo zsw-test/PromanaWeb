@@ -15,6 +15,7 @@ import axios from 'axios'
 import '@/icons' // icon
 import '@/permission' // permission control
 
+
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -27,6 +28,7 @@ if (process.env.NODE_ENV === 'production') {
   const { mockXHR } = require('../mock')
   mockXHR()
 }
+
 
 
 // set ElementUI lang to EN

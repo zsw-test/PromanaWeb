@@ -3,7 +3,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <h3 class="title">小区物业管理信息化平台</h3>
       </div>
 
       <el-form-item prop="Username">
@@ -23,7 +23,7 @@
 
       <el-form-item prop="Password">
         <span class="svg-container">
-          <svg-icon icon-class="Password" />
+          <svg-icon icon-class="password" />
         </span>
         <el-input
           :key="passwordType"

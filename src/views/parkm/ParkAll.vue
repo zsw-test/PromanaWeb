@@ -14,7 +14,7 @@
     <el-table-column
       prop="ID"
       label="车位ID"
-      width="120">
+      >
     </el-table-column>
     <el-table-column
       prop="Ownerid"

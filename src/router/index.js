@@ -79,35 +79,6 @@ export const constantRoutes = [
   },
 
   {
-    path: '/example',
-    hidden: Cookies.get('role')!='manager',
-    component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'el-icon-s-help',roles:['manager','owner']},
-    children: [
-      {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' ,roles:['manager','owner']},
-      },
-      {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' ,roles:['manager','owner']},
-      },
-      {
-        path: 'photo',
-        name: 'photo',
-        component: () => import('@/views/repairo/PhotoUp'),
-        meta: { title: 'photo', icon: 'tree' ,roles:['manager','owner']},
-      }
-    ]
-  },
-
-  {
     path: '/EntranceGuard',
     component: Layout,
     redirect: '/EntranceGuard/index',
@@ -350,6 +321,35 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/AnnounceM',
+    hidden: Cookies.get('role')!='manager',
+    component: Layout,
+    redirect: '/AnnounceM/AnnounceAll',
+    name: 'AnnounceM',
+    meta: { title: '公告', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'AnnounceAll',
+        name: 'AnnounceAll',
+        component: () => import('@/views/announcem/AnnounceAll'),
+        meta: { title: '查看公告', icon: 'table' }
+      },
+      {
+        path: 'AnnounceEdit',
+        name: 'AnnounceEdit',
+        hidden:true,
+        component: () => import('@/views/announcem/AnnounceEdit'),
+        meta: { title: '编辑公告', icon: 'table' }
+      },
+      {
+        path: 'AnnounceAdd',
+        name: 'AnnounceAdd',
+        component: () => import('@/views/announcem/AnnounceAdd'),
+        meta: { title: '发布公告', icon: 'table' }
+      },
+    ]
+  },
+  {
     path: '/RepairO',
     hidden: Cookies.get('role')!='owner',
     component: Layout,
@@ -445,90 +445,6 @@ export const constantRoutes = [
       },
     ]
   },
-
-  {
-    path: '/form',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
-      }
-    ]
-  },
-
-  {
-    path: '/nested',
-    component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
-    meta: {
-      title: 'Nested',
-      icon: 'nested'
-    },
-    children: [
-      {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
-      },
-      {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        name: 'Menu2',
-        meta: { title: 'menu2' }
-      }
-    ]
-  },
-
-  {
-    path: 'external-link',
-    component: Layout,
-    children: [
-      {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
-      }
-    ]
-  },
-
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

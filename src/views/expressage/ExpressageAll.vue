@@ -13,7 +13,7 @@
     <el-table-column
       prop="ID"
       label="快件单号"
-      width="120">
+      >
     </el-table-column>
     <el-table-column
       prop="Ownername"
@@ -47,10 +47,9 @@
     </el-table-column>
     <el-table-column
       label="操作"
-      width="200">
+      width="100">
       <template slot-scope="scope">
-        <el-button @click="queryCharge(scope.row)" type="primary" size="medium">查看</el-button>
-        <el-button  type="danger" size="medium">删除</el-button>
+         <el-button  @click="deleteRow(scope.row)" type="danger" size="small">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -76,6 +75,15 @@ export default {
     methods:{
         queryCharge(row){
             console.log(row)
+        },
+         deleteRow(row){
+          service.delete('/api/managerauth/expressage/'+row.ID).then((response)=>{
+                        console.log(response.data);
+                         this.$message(response.data.result)
+                         this.getData()
+                }).catch((response)=>{
+                    console.log(response);
+                })
         },
               page(currentpage){
                      service.get('/api/managerauth/expressagetotal').then((response)=>{

@@ -51,9 +51,11 @@ service.interceptors.response.use(
     if(res.data.code===401){
       Message("长时间未操作，请重新登录！")
       router.push('/login')
+      return
     }else if (res.data.code===402){
       Message("登陆超时 ~请重新登陆！")
       router.push('/login')
+      return 
     }
     return response
   },

@@ -13,7 +13,7 @@
     <el-table-column
       prop="ID"
       label="停车账单号"
-      width="120">
+      >
     </el-table-column>
     <el-table-column
       prop="CarNumber"

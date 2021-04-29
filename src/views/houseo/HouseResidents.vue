@@ -1,61 +1,81 @@
 <template>
   <div class="app-container">
-<el-card>
-    <div slot="header" class="clearfix">
+    <el-card>
+      <div
+        slot="header"
+        class="clearfix"
+      >
         <span>房户住户</span>
-    </div>
-  <el-table
-    :data="tableData"
-      element-loading-text="Loading"
-      border
-      fit
-      highlight-current-row>
-                 <el-table-column
-                prop="Name"
-                label="姓名"
-                width="120">
-              </el-table-column>
-              <el-table-column
-                prop="Sex"
-                label="性别"
-                width="120">
-              </el-table-column>
-              <el-table-column
-                prop="IdCard"
-                label="身份证号"
-                width="220">
-              </el-table-column>
-               <el-table-column
-                prop="Work"
-                label="工作"
-                width="120">
-              </el-table-column>
-    <el-table-column
-      label="操作"
-      width="150">
-      <template slot-scope="scope">
-        <el-button @click="DeleteResident(scope.row)" type="danger" size="small">删除住户</el-button>
-      </template>
-    </el-table-column>
-  </el-table>
+      </div>
+      <el-table
+        :data="tableData"
+        element-loading-text="Loading"
+        border
+        fit
+        highlight-current-row
+      >
+        <el-table-column
+          prop="Name"
+          label="姓名"
+        />
+        <el-table-column
+          prop="Sex"
+          label="性别"
+          width="120"
+        />
+        <el-table-column
+          prop="IdCard"
+          label="身份证号"
+          width="220"
+        />
+        <el-table-column
+          prop="Work"
+          label="工作"
+          width="120"
+        />
+        <el-table-column
+          label="操作"
+          width="150"
+        >
+          <template slot-scope="scope">
+            <el-button
+              type="danger"
+              size="small"
+              @click="DeleteResident(scope.row)"
+            >
+              删除住户
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
 
-<el-pagination
-  background
-  layout="prev, pager, next"
-  :page-size.sync=pagesize
-  :current-page.sync=pageindex
-  :total=total
-  @current-change="page">
-</el-pagination>
-
-
-</el-card>
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :page-size.sync="pagesize"
+        :current-page.sync="pageindex"
+        :total="total"
+        @current-change="page"
+      />
+    </el-card>
   </div>
 </template>
 
 <script>
 import service from "@/utils/request"
 export default {
+
+        data(){
+            return {
+                total:200,
+                tableData:[],
+                pageindex:1,
+                pagesize:5,
+            }
+        },
+        created(){
+            this.getData()
+        },
     methods:{
       
         DeleteResident(row){
@@ -84,19 +104,6 @@ export default {
                     console.log(response);
                 })
              },
-        },
-
-        data(){
-            return {
-              
-                total:200,
-                tableData:[],
-                pageindex:1,
-                pagesize:5,
-            }
-        },
-        created(){
-            this.getData()
         },
 }
 </script>

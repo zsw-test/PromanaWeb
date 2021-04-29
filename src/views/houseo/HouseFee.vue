@@ -1,5 +1,9 @@
 <template>
   <div class="app-container">
+<el-card>
+      <div slot="header" class="clearfix">
+        <span>费用一览</span>
+    </div>
     <el-card style="margin-bottom: 18px;">
     <div>
         <span> {{'水量： ' + this.Charge.Water +' (L)'}}</span>
@@ -24,7 +28,7 @@
         <el-button @click="dialogProperty=true" style="float: right; padding: 3px 0" type="text">缴费</el-button>
     </div>
     </el-card>
-
+</el-card>
 <el-dialog :visible.sync="dialogWater">
   <el-form>
     <el-form-item label="金额">

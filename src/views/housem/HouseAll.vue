@@ -14,7 +14,7 @@
     <el-table-column
       prop="ID"
       label="房屋ID"
-      width="120">
+      >
     </el-table-column>
     <el-table-column
       prop="Building"
@@ -77,7 +77,7 @@
               <el-table-column
                 prop="Name"
                 label="姓名"
-                width="120">
+                >
               </el-table-column>
               <el-table-column
                 prop="Sex"

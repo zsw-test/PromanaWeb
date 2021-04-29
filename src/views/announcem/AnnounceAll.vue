@@ -1,14 +1,11 @@
 <template>
-  <div class="dashboard-container">
-    <el-card><h2>江大园小区管理系统欢迎业主: {{ name }}</h2></el-card>
-
-
+  <div class="app-container">
     <el-card>
       <div
         slot="header"
         class="clearfix"
       >
-        <h3>公告</h3>
+        <span>查看公告</span>
       </div>
       <el-table
         :data="tableData"
@@ -18,8 +15,13 @@
         highlight-current-row
       >
         <el-table-column
+          prop="ID"
+          label="公告单号"
+        />
+        <el-table-column
           prop="Title"
           label="标题"
+          width="120"
         />
         <el-table-column
           prop="UpdatedAt"
@@ -39,7 +41,7 @@
 
         <el-table-column
           label="操作"
-          width="100"
+          width="220"
         >
           <template slot-scope="scope">
             <el-button
@@ -48,6 +50,20 @@
               @click="ShowRow(scope.row),dialogVisible = true"
             >
               查看详情
+            </el-button>
+            <el-button
+              type="primary"
+              size="small"
+              @click="EditRow(scope.row)"
+            >
+              编辑
+            </el-button>
+            <el-button
+              type="danger"
+              size="small"
+              @click="deleteRow(scope.row)"
+            >
+              删除
             </el-button>
           </template>
         </el-table-column>
@@ -77,64 +93,65 @@
 </template>
 
 <script>
-import Cookies from 'js-cookie'
-import service from '@/utils/request'
-
+import service from "@/utils/request"
 export default {
-  data(){
-    return{
-      role:Cookies.get("role"),
-      name: Cookies.get("username"),
-      parkdata:null,
-       ShowData:{
-        Title:null,
-        UpdatedAt:null,
-        Text:null,
-        Managername:null,
-      },
-      dialogVisible:false,
-      tableData:[],
-    }
-  },
-  
-  created(){
-    if(Cookies.get("role")=="owner"){
-      service.get("/api/ownerauth/owner/"+Cookies.get("ID"))
-      this.getData()
-    }else{
-      this.$message("请重新登陆")
-      this.$router.push("/login")
-    }
-  },
-  methods:{
-    ShowRow(row){
+
+        data(){
+            return {
+                ShowData:{
+                  Title:null,
+                  UpdatedAt:null,
+                  Text:null,
+                  Managername:null,
+                },
+                dialogVisible:false,
+                tableData:[],
+            }
+        },
+        created(){
+            this.getData()
+        },
+    methods:{
+        EditRow(row){
+          this.$router.push({name: 'AnnounceEdit', params: {announceid: row.ID}})
+        },
+        deleteRow(row){
+          service.delete('/api/managerauth/announce/'+row.ID).then((response)=>{
+                        console.log(response.data);
+                         this.$message(response.data.result)
+                         this.getData()
+                }).catch((response)=>{
+                    console.log(response);
+                })
+        },
+          formatBoolean: function (row, column, cellValue) {
+                var ret = ''  //你想在页面展示的值
+                if (cellValue) {
+                    ret = "是"  //根据自己的需求设定
+                } else {
+                    ret = "否"
+                }
+                return ret;
+            },
+        ShowRow(row){
           this.ShowData.Title = row.Title
           this.ShowData.UpdatedAt = row.UpdatedAt
           this.ShowData.Managername = row.Managername
           this.ShowData.Text = row.Text
         },
          getData(){
-                service.get('/api/ownerauth/announceall',).then((response)=>{
+                service.get('/api/managerauth/announceall',).then((response)=>{
                   
                     this.tableData = response.data.data
                      console.log(response.data.data);
                 }).catch((response)=>{
                     console.log(response);
                 })
-          },
-        
-  },
+             },
+        },
 }
 </script>
 
-<style lang="scss" scoped>
-.dashboard {
-  &-container {
-    margin: 30px;
-  }
-  &-text {
-    font-size: 30px;
-    line-height: 46px;
-  }
-}
+<style>
+
 </style>
