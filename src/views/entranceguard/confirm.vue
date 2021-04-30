@@ -68,7 +68,7 @@ import service from '@/utils/request';
                                       console.log(response);
                                   })
                           }else{
-                            this.$message("识别失败！相似度低于%80")
+                            this.$message("识别失败！相似度低于80%")
                           }
                         }else{
                           this.$message("人脸识别请求失败")

@@ -50,9 +50,19 @@ service.interceptors.response.use(
     
     if(res.data.code===401){
       Message("长时间未操作，请重新登录！")
+      Cookies.remove('token')
+      Cookies.remove('role')
+      Cookies.remove('username')
+      Cookies.remove('ID')
+      localStorage.clear()
       router.push('/login')
       return
     }else if (res.data.code===402){
+      Cookies.remove('token')
+      Cookies.remove('role')
+      Cookies.remove('username')
+      Cookies.remove('ID')
+      localStorage.clear()
       Message("登陆超时 ~请重新登陆！")
       router.push('/login')
       return 

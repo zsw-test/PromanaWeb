@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: 'Vue Admin Template',
+  title: '小区物业信息化平台',
 
   /**
    * @type {boolean} true | false

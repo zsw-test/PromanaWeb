@@ -101,6 +101,8 @@ export default {
      saveForm(formName){
        this.$refs[formName].validate((valid) => {
           if (valid) {
+            this.ruleForm.Ownerid = Number(this.ruleForm.Ownerid)
+            this.ruleForm.Status = Number(this.ruleForm.Status)
              service.put('/api/managerauth/park/'+this.ruleForm.ID,this.ruleForm).then((response)=>{
                      console.log(response.data);
                       this.$message(response.data.result); 
@@ -122,7 +124,10 @@ export default {
         });
      },
      editRow(row){
-        this.ruleForm = row
+        this.ruleForm.ID = row.ID
+        this.ruleForm.Ownerid = row.Ownerid
+        this.ruleForm.Status = row.Status
+        this.ruleForm.Location = row.Location
      },
       removeRow() {
          service.delete('/api/managerauth/park/'+this.removeID).then((response)=>{
@@ -174,6 +179,7 @@ export default {
       return {
         dialogVisible2:false,
         ruleForm: {
+          ID:null,
           Ownerid: null,
           Status: null,
           Location: '',

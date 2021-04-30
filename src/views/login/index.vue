@@ -77,7 +77,7 @@ export default {
     // }
     return {
       loginForm: {
-        Username: 'zsw0',
+        Username: 'zsw1',
         Password: '123456',
         Radio:'owner'
       },
@@ -98,6 +98,13 @@ export default {
       immediate: true
     }
   },
+    created(){
+      if(Cookies.get("role")=="manager"){
+        this.$router.push({ path: '/homeM' })
+      }else if (Cookies.get("role")=="owner"){
+         this.$router.push({ path: '/homeO' })
+      }
+    },
   methods: {
     showPwd() {
       if (this.passwordType === 'password') {
