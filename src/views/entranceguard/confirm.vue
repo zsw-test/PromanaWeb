@@ -10,7 +10,7 @@
       <el-upload
         class="upload-demo"
         drag
-        action="http://127.0.0.1:31717/api/qiniuup"
+        action="http://112.124.103.203:31717/api/qiniuup"
         multiple
         :on-success="handleSuccess"
         :on-remove="handleRemove"

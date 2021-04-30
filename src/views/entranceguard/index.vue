@@ -6,7 +6,7 @@
     </div>
         <el-upload
         class="upload-demo"
-        action="http://127.0.0.1:31717/api/qiniuup"
+        action="http://112.124.103.203:31717/api/qiniuup"
         :on-preview="handlePreview"
         :on-remove="handleRemove"
         multiple
