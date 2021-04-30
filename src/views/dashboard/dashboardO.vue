@@ -100,11 +100,15 @@ export default {
   created(){
     if(Cookies.get("role")=="owner"){
       service.get("/api/ownerauth/owner/"+Cookies.get("ID"))
-      this.getData()
+      if(location.href.indexOf("#reloaded")==-1){
+        location.href=location.href+"#reloaded";
+        location.reload();
+      }
     }else{
       this.$message("请重新登陆")
       this.$router.push("/login")
     }
+    this.getData()
   },
   methods:{
     ShowRow(row){

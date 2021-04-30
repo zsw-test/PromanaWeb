@@ -150,9 +150,9 @@ export default {
                         }else{
                           this.$router.push({ path: '/homeM' })
                         }
-                        this.$router.replace({
-                            path:'/black',
-                        })
+                        // this.$router.replace({
+                        //     path:'/black',
+                        // })
                           
                      }else{
                           this.$message('登陆失败!'+response.data.result);

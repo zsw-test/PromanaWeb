@@ -95,6 +95,10 @@ export default {
   created(){
     if(Cookies.get("role")=="manager"){
       service.get("/api/managerauth/manager/"+Cookies.get("ID"))
+        if(location.href.indexOf("#reloaded")==-1){
+        location.href=location.href+"#reloaded";
+        location.reload();
+      }
     }else{
       this.$message("请重新登陆")
       this.$router.push("/login")

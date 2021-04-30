@@ -32,10 +32,6 @@ import Cookies from 'js-cookie'
  */
 export const constantRoutes = [
   {
-    path:'/black',
-    component:()=>import('@/views/black')
-  },
-  {
     path: '/login',
     component: () => import('@/views/login/index'),
     hidden: true
