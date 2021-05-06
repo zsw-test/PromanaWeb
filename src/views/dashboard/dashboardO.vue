@@ -10,6 +10,12 @@
       >
         <h3>公告</h3>
       </div>
+              <el-input
+            style="width:35% ;margin-bottom:10px"
+          v-model="keyword"
+          size="mini"
+          @input="getData"
+          placeholder="输入关键字搜索"/>
       <el-table
         :data="tableData"
         element-loading-text="Loading"
@@ -83,6 +89,7 @@ import service from '@/utils/request'
 export default {
   data(){
     return{
+      keyword:"",
       role:Cookies.get("role"),
       name: Cookies.get("username"),
       parkdata:null,
@@ -118,7 +125,7 @@ export default {
           this.ShowData.Text = row.Text
         },
          getData(){
-                service.get('/api/ownerauth/announceall',).then((response)=>{
+                service.get('/api/ownerauth/announceall'+'?keyword='+this.keyword).then((response)=>{
                   
                     this.tableData = response.data.data
                      console.log(response.data.data);

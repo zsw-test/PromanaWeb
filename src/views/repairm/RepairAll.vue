@@ -4,6 +4,12 @@
     <div slot="header" class="clearfix">
         <span>所有报修</span>
     </div>
+      <el-input
+            style="width:35% ;margin-bottom:10px"
+          v-model="keyword"
+          size="mini"
+          @input="getData"
+          placeholder="输入关键字搜索"/>
   <el-table
     :data="tableData"
       element-loading-text="Loading"
@@ -67,6 +73,12 @@
   :visible.sync="dialogVisible"
   width="30%"
 >
+  <el-input
+            style="width:35% ;margin-bottom:10px"
+          v-model="keyword2"
+          size="mini"
+          @input="getData2"
+          placeholder="输入关键字搜索"/>
   <el-table
     :data="tableData2"
       element-loading-text="Loading"
@@ -175,13 +187,13 @@ export default {
                 })
           },
           getData2(){
-              service.get('/api/managerauth/managertotal',).then((response)=>{
+              service.get('/api/managerauth/managertotal?keyword='+this.keyword2).then((response)=>{
               console.log(response.data.data.count);
               this.total2 = response.data.data.count
           }).catch((response)=>{
               console.log(response);
           })
-          service.get('/api/managerauth/managerpage?pageindex='+this.pageindex2+'&pagesize='+this.pagesize2).then((response)=>{
+          service.get('/api/managerauth/managerpage?pageindex='+this.pageindex2+'&pagesize='+this.pagesize2+'&keyword='+this.keyword2).then((response)=>{
               this.tableData2 = response.data.data
                 console.log(response.data.data);
           }).catch((response)=>{
@@ -189,13 +201,13 @@ export default {
           })
         },
          getData(){
-                  service.get('/api/managerauth/repairtotal').then((response)=>{
+                  service.get('/api/managerauth/repairtotal?keyword='+this.keyword).then((response)=>{
                         console.log(response.data.data.count);
                     this.total = response.data.data.count
                 }).catch((response)=>{
                     console.log(response);
                 })
-                service.get('/api/managerauth/repairpage?pageindex='+this.pageindex+'&pagesize='+this.pagesize).then((response)=>{
+                service.get('/api/managerauth/repairpage?pageindex='+this.pageindex+'&pagesize='+this.pagesize+'&keyword='+this.keyword).then((response)=>{
                     this.tableData = response.data.data
                       for(var i=0;i<this.tableData.length;i++){
                       if(this.tableData[i].Pics==""){
@@ -227,6 +239,8 @@ export default {
 
         data(){
             return {
+              keyword:"",
+              keyword2:"",
                 ShowData:{
                   ShowList:[],
                   Ownername:null,

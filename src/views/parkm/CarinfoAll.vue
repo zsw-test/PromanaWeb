@@ -4,6 +4,12 @@
     <div slot="header" class="clearfix">
         <span>小区内部车辆</span>
     </div>
+      <el-input
+            style="width:35% ;margin-bottom:10px"
+          v-model="keyword"
+          size="mini"
+          @input="getData"
+          placeholder="输入关键字搜索"/>
   <el-table
     :data="tableData"
       element-loading-text="Loading"
@@ -71,13 +77,13 @@ export default {
                    this.getData()
           },
          getData(){
-                  service.get('/api/managerauth/carinfototal').then((response)=>{
+                  service.get('/api/managerauth/carinfototal'+'?keyword='+this.keyword).then((response)=>{
                         console.log(response.data.data.count);
                     this.total = response.data.data.count
                 }).catch((response)=>{
                     console.log(response);
                 })
-                service.get('/api/managerauth/carinfopage?pageindex='+this.pageindex+'&pagesize='+this.pagesize).then((response)=>{
+                service.get('/api/managerauth/carinfopage?pageindex='+this.pageindex+'&pagesize='+this.pagesize+'&keyword='+this.keyword).then((response)=>{
                     this.tableData = response.data.data
                      console.log(response.data.data);
                 }).catch((response)=>{
@@ -92,6 +98,7 @@ export default {
                 tableData:[],
                 pageindex:1,
                 pagesize:5,
+                keyword:"",
             }
         },
         created(){

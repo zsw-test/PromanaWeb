@@ -7,6 +7,12 @@
       >
         <span>查看公告</span>
       </div>
+        <el-input
+            style="width:35% ;margin-bottom:10px"
+          v-model="keyword"
+          size="mini"
+          @input="getData"
+          placeholder="输入关键字搜索"/>
       <el-table
         :data="tableData"
         element-loading-text="Loading"
@@ -98,6 +104,7 @@ export default {
 
         data(){
             return {
+              keyword:"",
                 ShowData:{
                   Title:null,
                   UpdatedAt:null,
@@ -140,7 +147,7 @@ export default {
           this.ShowData.Text = row.Text
         },
          getData(){
-                service.get('/api/managerauth/announceall',).then((response)=>{
+                service.get('/api/managerauth/announceall'+'?keyword='+this.keyword,).then((response)=>{
                   
                     this.tableData = response.data.data
                      console.log(response.data.data);

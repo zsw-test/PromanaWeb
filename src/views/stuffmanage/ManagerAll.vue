@@ -1,10 +1,17 @@
 
 <template>
   <div class="app-container">
+
 <el-card>
     <div slot="header" class="clearfix">
         <span>管理员列表</span>
     </div>
+  <el-input
+            style="width:35% ;margin-bottom:10px"
+          v-model="keyword"
+          size="mini"
+          @input="getData"
+          placeholder="输入关键字搜索"/>
   <el-table
     :data="tableData"
       element-loading-text="Loading"
@@ -39,6 +46,7 @@
     <el-table-column
       label="操作"
       width="200">
+
       <template slot-scope="scope">
         <el-button @click="editRow(scope.row),dialogVisible2 = true" type="primary" size="medium">编辑</el-button>
         <el-button @click="setremoveRowID(scope.row),dialogVisible = true" type="danger" size="medium">删除</el-button>
@@ -151,18 +159,21 @@ export default {
       },
       getData(){
 
-                  service.get('/api/managerauth/managertotal',).then((response)=>{
+                  service.get('/api/managerauth/managertotal?keyword='+this.keyword,).then((response)=>{
                         console.log(response.data.data.count);
                     this.total = response.data.data.count
                 }).catch((response)=>{
                     console.log(response);
                 })
-                service.get('/api/managerauth/managerpage?pageindex='+this.pageindex+'&pagesize='+this.pagesize).then((response)=>{
+                service.get('/api/managerauth/managerpage?pageindex='+this.pageindex+'&pagesize='+this.pagesize+'&keyword='+this.keyword).then((response)=>{
                     this.tableData = response.data.data
                      console.log(response.data.data);
                 }).catch((response)=>{
                     console.log(response);
                 })
+      },
+      change(){
+      this.$forceUpdate()
       },
       page(currentpage){
                   this.getData()
@@ -174,6 +185,7 @@ export default {
 
     data() {
       return {
+        keyword:"",
         dialogVisible2:false,
         editForm:{
           Username: '',
@@ -211,6 +223,7 @@ export default {
         tableData:[],
         pageindex:1,
         pagesize:5,
+        keyword:'',
     }
    
 }

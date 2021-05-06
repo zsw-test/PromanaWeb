@@ -4,6 +4,12 @@
     <div slot="header" class="clearfix">
         <span>所有快件</span>
     </div>
+      <el-input
+            style="width:35% ;margin-bottom:10px"
+          v-model="keyword"
+          size="mini"
+          @input="getData"
+          placeholder="输入关键字搜索"/>
   <el-table
     :data="tableData"
       element-loading-text="Loading"
@@ -86,27 +92,16 @@ export default {
                 })
         },
               page(currentpage){
-                     service.get('/api/managerauth/expressagetotal').then((response)=>{
-                        console.log(response.data.data.count);
-                    this.total = response.data.data.count
-                }).catch((response)=>{
-                    console.log(response);
-                })
-                service.get('/api/managerauth/expressagepage?pageindex='+currentpage+'&pagesize='+this.pagesize).then((response)=>{
-                    this.tableData = response.data.data
-                     console.log(response.data.data);
-                }).catch((response)=>{
-                    console.log(response);
-                })
+                   this.getData()
           },
          getData(){
-                  service.get('/api/managerauth/expressagetotal').then((response)=>{
+                  service.get('/api/managerauth/expressagetotal'+'?keyword='+this.keyword).then((response)=>{
                         console.log(response.data.data.count);
                     this.total = response.data.data.count
                 }).catch((response)=>{
                     console.log(response);
                 })
-                service.get('/api/managerauth/expressagepage?pageindex='+this.pageindex+'&pagesize='+this.pagesize).then((response)=>{
+                service.get('/api/managerauth/expressagepage?pageindex='+this.pageindex+'&pagesize='+this.pagesize+'&keyword='+this.keyword).then((response)=>{
                     this.tableData = response.data.data
                      console.log(response.data.data);
                 }).catch((response)=>{
@@ -121,6 +116,7 @@ export default {
                 tableData:[],
                 pageindex:1,
                 pagesize:5,
+                keyword:"",
             }
         },
         created(){

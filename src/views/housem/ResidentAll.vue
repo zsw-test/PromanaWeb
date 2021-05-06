@@ -5,6 +5,12 @@
     <div slot="header" class="clearfix">
         <span>住户列表</span>
     </div>
+      <el-input
+            style="width:35% ;margin-bottom:10px"
+          v-model="keyword"
+          size="mini"
+          @input="getData"
+          placeholder="输入关键字搜索"/>
   <el-table
     :data="tableData"
       element-loading-text="Loading"
@@ -163,13 +169,13 @@ export default {
          this.removeID = row.ID
       },
       getData(){
-                  service.get('/api/managerauth/residenttotal').then((response)=>{
+                  service.get('/api/managerauth/residenttotal'+'?keyword='+this.keyword).then((response)=>{
                         console.log(response.data.data.count);
                     this.total = response.data.data.count
                 }).catch((response)=>{
                     console.log(response);
                 })
-                service.get('/api/managerauth/residentpage?pageindex='+this.pageindex+'&pagesize='+this.pagesize).then((response)=>{
+                service.get('/api/managerauth/residentpage?pageindex='+this.pageindex+'&pagesize='+this.pagesize+'&keyword='+this.keyword).then((response)=>{
                     this.tableData = response.data.data
                      console.log(response.data.data);
                 }).catch((response)=>{
@@ -177,18 +183,7 @@ export default {
                 })
       },
       page(currentpage){
-                     service.get('/api/managerauth/residenttotal').then((response)=>{
-                        console.log(response.data.data.count);
-                    this.total = response.data.data.count
-                }).catch((response)=>{
-                    console.log(response);
-                })
-                service.get('/api/managerauth/residentpage?pageindex='+currentpage+'&pagesize='+this.pagesize).then((response)=>{
-                    this.tableData = response.data.data
-                     console.log(response);
-                }).catch((response)=>{
-                    console.log(response);
-                })
+                   this.getData()
       },
     },
     created(){
@@ -197,6 +192,7 @@ export default {
 
     data() {
       return {
+        keyword:"",
         dialogVisible2:false,
         ruleForm: {
           ID:null,

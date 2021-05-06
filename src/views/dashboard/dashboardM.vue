@@ -47,6 +47,12 @@
       >
         <h3>进入人员记录：</h3>
       </div>
+        <el-input
+            style="width:35% ;margin-bottom:10px"
+          v-model="keyword"
+          size="mini"
+          @input="getData"
+          placeholder="输入关键字搜索"/>
       <el-table
         :data="tableData"
         element-loading-text="Loading"
@@ -80,6 +86,7 @@ import service from '@/utils/request'
 export default {
   data(){
     return{
+      
       role:Cookies.get("role"),
       name: Cookies.get("username"),
       parkdata:{
@@ -90,6 +97,7 @@ export default {
       ownercount:0,
       residentcount:0,
       managercount:0,
+      keyword:"",
     }
   },
   created(){
@@ -115,28 +123,28 @@ export default {
   
   methods:{
      getData(){
-                service.get('/api/managerauth/accessall',).then((response)=>{
+                service.get('/api/managerauth/accessall'+'?keyword='+this.keyword).then((response)=>{
                   
                     this.tableData = response.data.data
                      console.log(response.data.data);
                 }).catch((response)=>{
                     console.log(response);
                 })
-                 service.get('/api/managerauth/ownertotal',).then((response)=>{
+                 service.get('/api/managerauth/ownertotal').then((response)=>{
                   
                     this.ownercount = response.data.data.count
                      console.log(response.data.data);
                 }).catch((response)=>{
                     console.log(response);
                 })
-                service.get('/api/managerauth/managertotal',).then((response)=>{
+                service.get('/api/managerauth/managertotal').then((response)=>{
                   
                     this.managercount = response.data.data.count
                      console.log(response.data.data);
                 }).catch((response)=>{
                     console.log(response);
                 })
-                 service.get('/api/managerauth/residenttotal',).then((response)=>{
+                 service.get('/api/managerauth/residenttotal').then((response)=>{
                   
                     this.residentcount = response.data.data.count
                      console.log(response.data.data);
