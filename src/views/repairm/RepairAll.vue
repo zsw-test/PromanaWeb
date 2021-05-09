@@ -119,7 +119,7 @@
   title="详情"
   :visible.sync="dialogVisible2"
   width="50%">
-   <el-card>保修人：{{this.ShowData.Ownername}}</el-card><br>
+   <el-card>报修人：{{this.ShowData.Ownername}}</el-card><br>
  <el-card>报修时间：{{this.ShowData.CreatedAt}}</el-card><br>
  <el-card>报修地点：{{this.ShowData.Address}}</el-card><br>
   <el-card>报修照片：

@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-container">
-    <el-card><h2>江大园小区管理系统欢迎业主: {{ name }}</h2></el-card>
+    <el-card><h2>点点小区管理系统欢迎业主: {{ name }}</h2></el-card>
 
 
     <el-card>

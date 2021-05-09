@@ -25,10 +25,6 @@
   width="30%">
  <el-card>停车时长：{{ParkinfoData.Parktime}}</el-card><br>
  <el-card>费用：{{ParkinfoData.Fee}}元</el-card><br>
-  <el-card>微信支付：
-    <el-image  :src="require('@/assets/wxpay.png')"></el-image>
-    </el-card><br>
-  
   <span slot="footer" class="dialog-footer">
     <el-button type="primary" @click="dialogVisible = false">缴费完成</el-button>
   </span>

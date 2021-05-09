@@ -10,7 +10,7 @@
     <el-input placeholder="请输入投诉部门" v-model="ruleForm.Depart" ></el-input>
   </el-form-item>
 <el-form-item label="投诉原因" prop="Reason">
-    <el-input placeholder="请输入保修原因" v-model="ruleForm.Reason"></el-input>
+    <el-input placeholder="请输入投诉原因" v-model="ruleForm.Reason"></el-input>
   </el-form-item>
   <el-form-item>
     <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>

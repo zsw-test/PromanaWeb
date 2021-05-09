@@ -9,8 +9,8 @@
   <el-form-item label="地址" prop="Address">
     <el-input placeholder="请输入地址" v-model="ruleForm.Address" ></el-input>
   </el-form-item>
-<el-form-item label="保修原因" prop="Reason">
-    <el-input placeholder="请输入保修原因" v-model="ruleForm.Reason"></el-input>
+<el-form-item label="报修原因" prop="Reason">
+    <el-input placeholder="请输入报修原因" v-model="ruleForm.Reason"></el-input>
   </el-form-item>
   <el-form-item>
         <el-upload
